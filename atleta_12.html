@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atleta — Injury Prevention & Recovery for Every Athlete</title>
+<meta name="description" content="Atleta is a bilingual English/Spanish injury prevention and recovery platform built for Latino youth athletes. Prevención de lesiones y recuperación para atletas jóvenes.">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link rel="apple-touch-icon" href="atleta-icon-180.png">
+<link rel="manifest" href="atleta-manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atleta">
+<meta name="theme-color" content="#080A0F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080A0F;--ink:#0F1218;--ink2:#161B24;--border:#1E2535;--border2:#252D3D;
+  --dim:#3D4A60;--muted:#6B7A94;--soft:#9BA8BC;--light:#C8D0DF;--white:#F0F3F8;--pure:#FFFFFF;
+  --blue:#2C6EFF;--blue-bright:#4F87FF;--blue-glow:rgba(44,110,255,0.12);
+  --green:#00A86B;--red:#E03E52;--amber:#D4900A;--purple:#7C5CFC;
+  --font-serif:'DM Serif Display',serif;--font-sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── LANGUAGE TOGGLE ── */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:36px;background:var(--blue);display:flex;align-items:center;justify-content:center;gap:12px}
+.lang-bar-text{font-size:12px;font-weight:500;color:rgba(255,255,255,0.75)}
+.lang-toggle{display:flex;background:rgba(255,255,255,0.15);border-radius:100px;padding:3px;gap:2px}
+.lang-btn{padding:4px 14px;border-radius:100px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:var(--font-sans);letter-spacing:.04em}
+.lang-btn.active{background:var(--pure);color:var(--blue)}
+.lang-btn:not(.active){background:transparent;color:rgba(255,255,255,0.7)}
+.lang-btn:not(.active):hover{color:var(--pure)}
+
+/* ── NAV ── */
+nav{position:fixed;top:36px;left:0;right:0;z-index:100;height:60px;padding:0 56px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-mark{width:28px;height:28px;border-radius:7px;background:var(--blue);display:flex;align-items:center;justify-content:center}
+.nav-logo-text{font-family:var(--font-serif);font-size:18px;color:var(--pure);letter-spacing:-.3px;font-style:italic}
+.nav-logo-text span{color:var(--blue-bright);font-style:normal;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle;margin-left:2px}
+.nav-center{display:flex;gap:2px}
+.nav-link{padding:6px 12px;border-radius:7px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .18s}
+.nav-link:hover{color:var(--white);background:rgba(255,255,255,0.04)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-cancha{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-cancha:hover{color:var(--white)}
+.nav-btn{background:var(--blue);color:var(--pure);padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:var(--font-sans)}
+.nav-btn:hover{background:var(--blue-bright);transform:translateY(-1px)}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;color:var(--white)}
+.mob-menu{display:none;position:fixed;left:0;right:0;bottom:0;background:var(--black);z-index:99;padding:24px 28px 40px;flex-direction:column;gap:4px;top:96px;overflow-y:auto}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:16px;font-weight:500;color:var(--light);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mob-menu a::after{content:"→";color:var(--blue-bright);font-size:14px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:98;top:96px}
+.mob-overlay.open{display:block}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;place-items:center;padding:130px 56px 80px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;opacity:.25;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
+.hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(ellipse,rgba(44,110,255,0.06) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;text-align:center;max-width:780px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(44,110,255,0.07);border:1px solid rgba(44,110,255,0.18);border-radius:4px;padding:7px 16px;font-size:11px;font-weight:600;color:var(--blue-bright);margin-bottom:32px;letter-spacing:.06em;text-transform:uppercase}
+.hero-tag-sep{width:1px;height:12px;background:rgba(44,110,255,0.3)}
+h1{font-family:var(--font-serif);font-size:clamp(44px,6.5vw,80px);line-height:1.05;letter-spacing:-.5px;margin-bottom:16px;color:var(--pure)}
+h1 em{font-style:italic;color:var(--blue-bright)}
+.hero-sub-en,.hero-sub-es{font-size:17px;line-height:1.75;color:var(--muted);max-width:540px;margin:0 auto 40px;font-weight:300}
+.hero-sub-en strong,.hero-sub-es strong{color:var(--light);font-weight:500}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn{padding:12px 26px;border-radius:7px;font-size:14px;font-weight:600;text-decoration:none;transition:all .22s;display:inline-block;font-family:var(--font-sans);border:none;cursor:pointer}
+.btn-blue{background:var(--blue);color:var(--pure)}
+.btn-blue:hover{background:var(--blue-bright);transform:translateY(-2px);box-shadow:0 8px 28px rgba(44,110,255,0.22)}
+.btn-outline{background:transparent;color:var(--light);border:1px solid var(--border2)}
+.btn-outline:hover{border-color:var(--dim);color:var(--pure);transform:translateY(-2px)}
+.hero-proof{display:flex;align-items:center;justify-content:center;gap:40px;padding-top:40px;border-top:1px solid var(--border);flex-wrap:wrap}
+.proof-item{text-align:center}
+.proof-num{font-family:var(--font-serif);font-size:26px;color:var(--pure);line-height:1}
+.proof-label{font-size:11px;color:var(--muted);margin-top:5px;font-weight:400}
+.proof-sep{width:1px;height:28px;background:var(--border)}
+
+/* ── SECTIONS ── */
+.section{padding:96px 56px}
+.si{max-width:1060px;margin:0 auto}
+.si-narrow{max-width:700px;margin:0 auto}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:14px}
+h2{font-family:var(--font-serif);font-size:clamp(30px,3.5vw,46px);line-height:1.12;letter-spacing:-.2px;margin-bottom:14px;color:var(--pure)}
+h2 .dim{color:var(--muted);font-style:italic}
+.section-sub{font-size:15px;color:var(--muted);line-height:1.7;max-width:520px;font-weight:300}
+
+/* ── PILLARS ── */
+.pillars-bg{background:var(--ink)}
+.pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
+.pillar-card{background:var(--black);border:1px solid var(--border);border-radius:14px;padding:32px;transition:border-color .2s}
+.pillar-card:hover{border-color:var(--dim)}
+.pillar-icon{width:44px;height:44px;border-radius:10px;border:1px solid var(--border2);background:var(--ink2);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.pillar-icon svg{width:20px;height:20px;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.pi-blue svg{stroke:var(--blue-bright)}
+.pi-green svg{stroke:var(--green)}
+.pi-purple svg{stroke:var(--purple)}
+.pi-amber svg{stroke:var(--amber)}
+.pillar-title{font-size:16px;font-weight:600;color:var(--pure);margin-bottom:8px;letter-spacing:-.1px}
+.pillar-desc{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* ── ASSESSMENT ── */
+.assess-bg{background:var(--black)}
+.tab-row{display:flex;background:var(--ink);border:1px solid var(--border);border-radius:10px;padding:4px;gap:4px;max-width:700px;margin:0 auto 28px}
+.tab-btn{flex:1;padding:10px;border-radius:7px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;color:var(--muted);background:transparent}
+.tab-btn.active{background:var(--blue);color:var(--pure)}
+.tab-btn:not(.active):hover{color:var(--light)}
+.assess-shell{background:var(--ink);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:700px;margin:0 auto}
+.assess-top{padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.assess-brand{font-size:12px;font-weight:600;color:var(--soft);display:flex;align-items:center;gap:8px}
+.assess-line{width:16px;height:2px;background:var(--blue);border-radius:1px}
+.assess-count{font-size:12px;color:var(--dim)}
+.assess-bar{height:2px;background:var(--border)}
+.assess-bar-fill{height:2px;background:var(--blue);transition:width .4s ease;width:0%}
+.assess-body{padding:30px 28px}
+.q-section{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.q-text{font-family:var(--font-serif);font-size:20px;color:var(--pure);margin-bottom:24px;line-height:1.35}
+.q-opts{display:grid;gap:7px}
+.q-opt{background:transparent;border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;font-size:13px;color:var(--soft);transition:all .18s;text-align:left;font-family:var(--font-sans);display:flex;align-items:center;gap:12px;width:100%;font-weight:300}
+.q-opt:hover{border-color:var(--dim);color:var(--light);background:rgba(255,255,255,0.015)}
+.q-opt.sel{border-color:var(--blue);color:var(--pure);background:rgba(44,110,255,0.05)}
+.q-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.q-opt.sel .q-radio{border-color:var(--blue);background:var(--blue)}
+.q-dot{width:5px;height:5px;border-radius:50%;background:var(--pure);opacity:0}
+.q-opt.sel .q-dot{opacity:1}
+.assess-foot{padding:16px 28px 24px;display:flex;align-items:center;justify-content:space-between}
+.a-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 18px;border-radius:7px;font-size:12px;cursor:pointer;font-family:var(--font-sans);transition:all .18s;font-weight:500}
+.a-back:hover{border-color:var(--dim);color:var(--light)}
+.a-next{background:var(--blue);color:var(--pure);padding:9px 22px;border-radius:7px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .18s}
+.a-next:hover{background:var(--blue-bright)}
+.a-next:disabled{opacity:.3;cursor:not-allowed}
+
+/* ── RESULTS ── */
+.result-shell{display:none;background:var(--ink);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:700px;margin:0 auto}
+.result-top{padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.result-title-text{font-family:var(--font-serif);font-size:18px;color:var(--pure)}
+.risk-chip{padding:5px 14px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.rc-low{background:rgba(0,168,107,0.1);color:var(--green);border:1px solid rgba(0,168,107,0.2)}
+.rc-med{background:rgba(212,144,10,0.1);color:var(--amber);border:1px solid rgba(212,144,10,0.2)}
+.rc-high{background:rgba(224,62,82,0.1);color:var(--red);border:1px solid rgba(224,62,82,0.2)}
+.result-body{padding:26px 28px;display:flex;flex-direction:column;gap:20px}
+.rb-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:10px}
+.rb-items{display:flex;flex-direction:column;gap:7px}
+.rb-item{display:flex;gap:10px;font-size:13px;color:var(--soft);line-height:1.65;font-weight:300}
+.rb-dot{width:4px;height:4px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:8px}
+.result-msg{background:rgba(44,110,255,0.05);border:1px solid rgba(44,110,255,0.12);border-radius:10px;padding:16px 18px;font-size:13px;color:var(--light);line-height:1.75;font-weight:300}
+.result-alert{background:rgba(224,62,82,0.05);border:1px solid rgba(224,62,82,0.15);border-radius:10px;padding:16px 18px}
+.result-alert-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.result-alert-text{font-size:13px;color:var(--soft);line-height:1.65;font-weight:300}
+.result-foot{padding:16px 28px 24px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap}
+.loading-box{padding:56px 28px;text-align:center}
+.spinner{width:28px;height:28px;border:1.5px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--muted);font-weight:300}
+
+/* ── RECOVERY TRACKER ── */
+.recovery-bg{background:var(--ink)}
+.recovery-card{background:var(--black);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:700px;margin:0 auto}
+.recovery-head{padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.recovery-title{font-size:14px;font-weight:600;color:var(--pure);display:flex;align-items:center;gap:8px}
+.rec-line{width:16px;height:2px;background:var(--green);border-radius:1px}
+.recovery-body{padding:28px}
+.rec-field{margin-bottom:18px}
+.rec-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:block}
+.rec-input{width:100%;background:var(--ink);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--pure);font-family:var(--font-sans);outline:none;transition:border-color .2s;font-weight:300}
+.rec-input:focus{border-color:var(--green)}
+.rec-input::placeholder{color:var(--dim)}
+.rec-select{width:100%;background:var(--ink);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--pure);font-family:var(--font-sans);outline:none;cursor:pointer}
+.rec-select option{background:var(--ink)}
+.pain-scale{display:flex;gap:6px;flex-wrap:wrap}
+.pain-btn{width:44px;height:44px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);transition:all .2s}
+.pain-btn:hover{border-color:var(--dim);color:var(--light)}
+.pain-btn.sel-pain{border-color:var(--blue);background:rgba(44,110,255,0.1);color:var(--pure)}
+.rec-textarea{width:100%;background:var(--ink);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--pure);font-family:var(--font-sans);outline:none;resize:none;line-height:1.6;font-weight:300}
+.rec-textarea:focus{border-color:var(--green)}
+.rec-textarea::placeholder{color:var(--dim)}
+.rec-submit{background:var(--green);color:var(--pure);padding:11px 24px;border-radius:7px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;width:100%;margin-top:4px}
+.rec-submit:hover{background:#00C47E}
+.rec-log{margin-top:20px;display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto}
+.rec-entry{background:var(--ink);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.rec-entry-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.rec-entry-date{font-size:11px;color:var(--dim);font-weight:500}
+.rec-entry-pain{font-size:11px;font-weight:700;padding:3px 8px;border-radius:100px}
+.rep-low{background:rgba(0,168,107,0.1);color:var(--green)}
+.rep-med{background:rgba(212,144,10,0.1);color:var(--amber)}
+.rep-high{background:rgba(224,62,82,0.1);color:var(--red)}
+.rec-entry-note{font-size:12px;color:var(--muted);font-weight:300;line-height:1.5}
+.rec-ai-feedback{background:rgba(44,110,255,0.05);border:1px solid rgba(44,110,255,0.12);border-radius:10px;padding:14px 16px;margin-top:8px;font-size:13px;color:var(--light);line-height:1.7;font-weight:300}
+
+/* ── INJURY LIBRARY ── */
+.inj-bg{background:var(--black)}
+.inj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:48px}
+.inj-card{background:var(--ink);border:1px solid var(--border);border-radius:12px;padding:22px;cursor:pointer;transition:all .22s}
+.inj-card:hover{border-color:var(--dim);transform:translateY(-2px)}
+.inj-cat{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.inj-name{font-size:15px;font-weight:600;color:var(--pure);margin-bottom:2px}
+.inj-name-es{font-size:12px;color:var(--blue-bright);font-weight:500;margin-bottom:8px;font-style:italic}
+.inj-desc{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+.inj-sev-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+.inj-sev-bar{flex:1;height:2px;background:var(--border);border-radius:100px;overflow:hidden}
+.inj-sev-fill{height:100%;border-radius:100px}
+.sf-low{background:var(--green);width:33%}
+.sf-med{background:var(--amber);width:66%}
+.sf-high{background:var(--red);width:100%}
+.inj-sev-text{font-size:11px;font-weight:500}
+.inj-toggle{font-size:11px;color:var(--blue-bright);font-weight:600;margin-top:12px}
+.inj-expand{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
+.inj-expand.open{display:block}
+.inj-expand strong{color:var(--light);font-weight:500}
+
+/* ── DOCTOR FINDER ── */
+.doc-bg{background:var(--ink)}
+.doc-search{background:var(--black);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.doc-input{flex:1;min-width:200px;background:var(--ink);border:1px solid var(--border);border-radius:7px;padding:10px 14px;font-size:13px;color:var(--pure);font-family:var(--font-sans);outline:none;transition:border-color .2s;font-weight:300}
+.doc-input:focus{border-color:var(--blue)}
+.doc-input::placeholder{color:var(--dim)}
+.doc-select{background:var(--ink);border:1px solid var(--border);border-radius:7px;padding:10px 14px;font-size:13px;color:var(--pure);font-family:var(--font-sans);outline:none;min-width:190px;cursor:pointer}
+.doc-select option{background:var(--ink)}
+.doc-btn{background:var(--blue);color:var(--pure);padding:10px 22px;border-radius:7px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;white-space:nowrap}
+.doc-btn:hover{background:var(--blue-bright)}
+.doc-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.doc-card{background:var(--black);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .22s}
+.doc-card:hover{border-color:var(--dim);transform:translateY(-2px)}
+.doc-icon{width:38px;height:38px;border-radius:8px;background:var(--ink2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.doc-icon svg{width:16px;height:16px;stroke:var(--blue-bright);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.doc-name{font-size:14px;font-weight:600;color:var(--pure);margin-bottom:3px;line-height:1.3}
+.doc-type{font-size:11px;color:var(--blue-bright);font-weight:600;margin-bottom:10px}
+.doc-bilingual{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:rgba(124,92,252,0.1);color:var(--purple);border:1px solid rgba(124,92,252,0.2);margin-bottom:10px}
+.doc-rating{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.doc-stars{color:var(--amber);font-size:11px}
+.doc-rating-text{font-size:11px;color:var(--muted)}
+.doc-details{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.doc-detail{font-size:12px;color:var(--muted);display:flex;gap:6px;line-height:1.5;font-weight:300}
+.doc-detail-label{font-size:10px;font-weight:600;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;min-width:42px;margin-top:1px;flex-shrink:0}
+.doc-status{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:12px}
+.ds-yes{background:rgba(0,168,107,0.08);color:var(--green);border:1px solid rgba(0,168,107,0.18)}
+.ds-call{background:rgba(107,122,148,0.08);color:var(--muted);border:1px solid var(--border)}
+.doc-visit{display:block;text-align:center;background:transparent;border:1px solid var(--border);color:var(--light);padding:9px;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;font-family:var(--font-sans)}
+.doc-visit:hover{border-color:var(--blue);color:var(--blue-bright);background:rgba(44,110,255,0.05)}
+.doc-empty{text-align:center;padding:56px;color:var(--muted);font-size:14px;line-height:1.7;font-weight:300}
+.doc-empty a{color:var(--blue-bright);text-decoration:none}
+.doc-loading{text-align:center;padding:48px;font-size:13px;color:var(--muted);font-weight:300}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);border-top:1px solid var(--border);padding:48px 56px 32px}
+.footer-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-brand{font-family:var(--font-serif);font-size:20px;color:var(--pure);margin-bottom:10px;font-style:italic}
+.footer-desc{font-size:12px;color:var(--muted);line-height:1.65;font-weight:300;max-width:240px}
+.footer-col h4{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;padding:4px 0;transition:color .18s;font-weight:300}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{max-width:1060px;margin:0 auto;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.footer-copy{font-size:11px;color:var(--dim);font-weight:300}
+
+
+/* ── ONBOARDING ── */
+.onboard-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--black);transition:opacity .5s ease}.onboard-overlay.hidden{display:none!important}
+
+/* SPLASH SCREEN */
+.splash{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;position:absolute;inset:0;transition:opacity .6s ease}
+.splash.gone{opacity:0;pointer-events:none}
+.splash-logo{font-family:var(--font-serif);font-size:52px;color:var(--pure);font-style:italic;margin-bottom:8px;opacity:0;transform:translateY(20px);animation:splash-in .8s ease .3s forwards}
+.splash-tagline{font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.08em;text-transform:uppercase;opacity:0;animation:splash-in .8s ease .7s forwards}
+.splash-swirl{width:48px;height:48px;margin-top:48px;position:relative;opacity:0;animation:splash-in .8s ease .5s forwards}
+.swirl-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--blue);animation:swirl 1s linear infinite}
+.swirl-ring-2{position:absolute;inset:6px;border-radius:50%;border:2px solid transparent;border-top-color:rgba(44,110,255,0.4);animation:swirl .7s linear infinite reverse}
+@keyframes swirl{to{transform:rotate(360deg)}}
+@keyframes splash-in{to{opacity:1;transform:translateY(0)}}
+
+/* SIGN IN SCREEN */
+.signin{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;padding:32px;position:absolute;inset:0}
+.signin.active{display:flex}
+.signin-card{background:var(--ink);border:1px solid var(--border);border-radius:20px;padding:36px 32px;width:100%;max-width:400px}
+.signin-logo{font-family:var(--font-serif);font-size:28px;color:var(--pure);font-style:italic;text-align:center;margin-bottom:6px}
+.signin-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px;font-weight:300}
+.signin-step{display:none}
+.signin-step.active{display:block}
+.signin-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:block}
+.signin-input{width:100%;background:var(--black);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--pure);font-family:var(--font-sans);outline:none;transition:border-color .2s;font-weight:300;margin-bottom:14px}
+.signin-input:focus{border-color:var(--blue)}
+.signin-input::placeholder{color:var(--dim)}
+.signin-btn{width:100%;background:var(--blue);color:var(--pure);padding:13px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;margin-top:4px}
+.signin-btn:hover{background:var(--blue-bright);transform:translateY(-1px)}
+.signin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.signin-note{font-size:11px;color:var(--dim);text-align:center;margin-top:14px;line-height:1.6;font-weight:300}
+.signin-error{font-size:12px;color:var(--red);margin-top:8px;min-height:16px}
+.signin-divider{display:flex;align-items:center;gap:12px;margin:20px 0}
+.signin-divider-line{flex:1;height:1px;background:var(--border)}
+.signin-divider-text{font-size:11px;color:var(--dim);font-weight:500}
+
+/* SUCCESS SCREEN */
+.success{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;padding:32px;position:absolute;inset:0;text-align:center}
+.success.active{display:flex}
+.success-check{width:64px;height:64px;border-radius:50%;background:rgba(0,168,107,0.12);border:1px solid rgba(0,168,107,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.success-check svg{width:28px;height:28px;stroke:var(--green);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.success-title{font-family:var(--font-serif);font-size:28px;color:var(--pure);margin-bottom:10px;font-style:italic}
+.success-msg{font-size:14px;color:var(--muted);line-height:1.7;max-width:320px;margin:0 auto 32px;font-weight:300}
+.success-swirl{width:36px;height:36px;margin:0 auto;position:relative}
+.success-enter{background:var(--blue);color:var(--pure);padding:13px 32px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;display:none}
+.success-enter:hover{background:var(--blue-bright)}
+
+/* LOADING SWIRL for submit */
+.btn-swirl{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:swirl .6s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+
+
+/* ── ONBOARDING STYLES ── */
+.ob-step{display:block}
+.ob-input{width:100%;background:#080A0F;border:1px solid #1E2535;border-radius:8px;padding:12px 14px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:4px;transition:border-color 0.2s;font-weight:300;display:block}
+.ob-input:focus{border-color:#2C6EFF}
+.ob-input::placeholder{color:#3D4A60}
+.ob-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:6px;display:block;margin-top:4px}
+.ob-btn{width:100%;background:#2C6EFF;color:#fff;padding:13px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;margin-top:8px}
+.ob-btn:hover{background:#4F87FF}
+.ob-back-btn{background:transparent;border:1px solid #1E2535;color:#6B7A94;padding:13px 18px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;margin-top:8px}
+.ob-back-btn:hover{border-color:#3D4A60;color:#C8D0DF}
+.ob-error{font-size:12px;color:#E03E52;min-height:16px;margin-bottom:4px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PROFILE SECTION ── */
+.profile-section{padding:28px}
+.profile-av{width:72px;height:72px;border-radius:50%;background:var(--blue-glow);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;color:var(--pure);font-style:italic;margin:0 auto 16px;flex-shrink:0}
+.profile-username{font-family:var(--font-serif);font-size:22px;color:var(--pure);text-align:center;font-style:italic;margin-bottom:4px}
+.profile-joined{font-size:11px;color:var(--muted);text-align:center;margin-bottom:24px;font-weight:300}
+.profile-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.profile-row:last-child{border-bottom:none}
+.profile-row-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);min-width:80px;margin-top:2px}
+.profile-row-value{font-size:14px;color:var(--light);font-weight:300;flex:1}
+.profile-edit-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 18px;border-radius:7px;font-size:12px;cursor:pointer;font-family:var(--font-sans);transition:all .2s;font-weight:500;margin-top:20px;width:100%}
+.profile-edit-btn:hover{border-color:var(--blue);color:var(--blue-bright)}
+
+/* ── LANGUAGE SWITCHING ── */
+.en{display:block}.es{display:none}
+body.lang-es .en{display:none}
+body.lang-es .es{display:block}
+.en-inline{display:inline}
+body.lang-es .en-inline{display:none}
+.es-inline{display:none}
+body.lang-es .es-inline{display:inline}
+
+/* ── ANIMATIONS ── */
+.fade-up{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:0 20px}.nav-center{display:none}.mob-btn{display:block}
+  .hero,.section{padding-left:20px;padding-right:20px}
+  .pillars-grid{grid-template-columns:1fr}.inj-grid{grid-template-columns:1fr 1fr}
+  .doc-search{flex-direction:column}
+  footer{padding:40px 20px 24px}.footer-inner{grid-template-columns:1fr 1fr;gap:28px}
+}
+@media(max-width:600px){
+  h1{font-size:40px}.inj-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column;align-items:center}
+  .footer-inner{grid-template-columns:1fr}.proof-sep{display:none}.hero-proof{gap:20px}
+  .pain-btn{width:38px;height:38px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+
+<!-- ONBOARDING OVERLAY -->
+<div id="onboard" style="position:fixed;inset:0;z-index:9999;background:#080A0F;display:flex;align-items:center;justify-content:center;flex-direction:column">
+
+  <!-- SPLASH -->
+  <div id="ob-splash" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px">
+    <div style="font-family:'DM Serif Display',serif;font-size:56px;color:#fff;font-style:italic;margin-bottom:8px;animation:fadeInUp 0.8s ease 0.3s both">Atleta</div>
+    <div id="ob-tagline-new" style="display:block;font-size:12px;color:#6B7A94;letter-spacing:.1em;text-transform:uppercase;font-weight:500;animation:fadeInUp 0.8s ease 0.6s both">
+      <span class="en-inline">Every athlete deserves to stay in the game</span>
+      <span class="es-inline">Todo atleta merece seguir en el juego</span>
+    </div>
+    <div id="ob-tagline-returning" style="display:none;font-size:15px;color:#6B7A94;font-weight:300;animation:fadeInUp 0.8s ease 0.4s both">
+      <span class="en-inline">Welcome back, </span>
+      <span class="es-inline">Bienvenido de nuevo, </span>
+      <span id="ob-welcome-back-name" style="color:#4F87FF;font-weight:500"></span>
+    </div>
+    <div style="width:40px;height:40px;margin-top:48px;position:relative;animation:fadeInUp 0.8s ease 0.5s both">
+      <div style="position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:#2C6EFF;animation:spin 1s linear infinite"></div>
+      <div style="position:absolute;inset:6px;border-radius:50%;border:2px solid transparent;border-top-color:rgba(44,110,255,0.3);animation:spin 0.7s linear infinite reverse"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE SETUP - multi step -->
+  <div id="ob-profile" style="display:none;width:100%;max-width:420px;padding:20px;overflow-y:auto;max-height:100vh">
+    <div style="background:#0F1218;border:1px solid #1E2535;border-radius:20px;padding:32px 28px">
+
+      <!-- Progress bar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:#fff;font-style:italic">Atleta</div>
+        <div style="font-size:11px;color:#3D4A60;font-weight:600" id="ob-step-counter">Step 1 of 4</div>
+      </div>
+      <div style="height:2px;background:#1E2535;border-radius:100px;margin-bottom:28px;overflow:hidden">
+        <div id="ob-progress" style="height:2px;background:#2C6EFF;border-radius:100px;transition:width .4s ease;width:25%"></div>
+      </div>
+
+      <!-- STEP 1: Username -->
+      <div id="ob-s1" class="ob-step">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="en-inline">Step 1 — Username</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="es-inline">Paso 1 — Nombre de usuario</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:6px" class="en-inline">Choose your username.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:6px" class="es-inline">Elige tu nombre de usuario.</div>
+        <div style="font-size:13px;color:#6B7A94;margin-bottom:20px;font-weight:300" class="en-inline">This is how you'll appear on Atleta.</div>
+        <div style="font-size:13px;color:#6B7A94;margin-bottom:20px;font-weight:300" class="es-inline">Así aparecerás en Atleta.</div>
+        <input id="ob-username" type="text" placeholder="e.g. atleta_stacy" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ob-input" onkeydown="if(event.key==='Enter')obNext(1)"/>
+        <div class="ob-error" id="ob-err-1"></div>
+        <button class="ob-btn" onclick="obNext(1)"><span class="en-inline">Continue</span><span class="es-inline">Continuar</span></button>
+      </div>
+
+      <!-- STEP 2: Name + Age + Gender -->
+      <div id="ob-s2" class="ob-step" style="display:none">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="en-inline">Step 2 — About you</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="es-inline">Paso 2 — Sobre ti</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:20px" class="en-inline">Tell us about yourself.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:20px" class="es-inline">Cuéntanos sobre ti.</div>
+        <label class="ob-label en-inline">Full name</label>
+        <label class="ob-label es-inline">Nombre completo</label>
+        <input id="ob-name" type="text" class="ob-input" placeholder="Your full name / Tu nombre completo" style="margin-bottom:12px"/>
+        <label class="ob-label en-inline">Age</label>
+        <label class="ob-label es-inline">Edad</label>
+        <input id="ob-age" type="number" min="8" max="25" class="ob-input" placeholder="Your age / Tu edad" style="margin-bottom:12px"/>
+        <label class="ob-label en-inline">Gender</label>
+        <label class="ob-label es-inline">Género</label>
+        <select id="ob-gender" class="ob-input" style="cursor:pointer">
+          <option value="" disabled selected>Select / Seleccionar</option>
+          <option value="Male / Masculino">Male / Masculino</option>
+          <option value="Female / Femenino">Female / Femenino</option>
+          <option value="Non-binary / No binario">Non-binary / No binario</option>
+          <option value="Prefer not to say / Prefiero no decir">Prefer not to say / Prefiero no decir</option>
+        </select>
+        <div class="ob-error" id="ob-err-2"></div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="ob-back-btn" onclick="obBack(2)"><span class="en-inline">Back</span><span class="es-inline">Atrás</span></button>
+          <button class="ob-btn" style="flex:1" onclick="obNext(2)"><span class="en-inline">Continue</span><span class="es-inline">Continuar</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Sport + Injuries -->
+      <div id="ob-s3" class="ob-step" style="display:none">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="en-inline">Step 3 — Athletic profile</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="es-inline">Paso 3 — Perfil atlético</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:20px" class="en-inline">Your sport and history.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:20px" class="es-inline">Tu deporte e historial.</div>
+        <label class="ob-label en-inline">Primary sport</label>
+        <label class="ob-label es-inline">Deporte principal</label>
+        <select id="ob-sport" class="ob-input" style="cursor:pointer;margin-bottom:12px">
+          <option value="" disabled selected>Select / Seleccionar</option>
+          <option>Soccer / Fútbol</option>
+          <option>Basketball / Baloncesto</option>
+          <option>Football / Fútbol americano</option>
+          <option>Baseball / Béisbol</option>
+          <option>Softball / Sóftbol</option>
+          <option>Tennis / Tenis</option>
+          <option>Volleyball / Voleibol</option>
+          <option>Track & Field / Atletismo</option>
+          <option>Swimming / Natación</option>
+          <option>Gymnastics / Gimnasia</option>
+          <option>Dance / Danza</option>
+          <option>Other / Otro</option>
+        </select>
+        <label class="ob-label en-inline">Past or current injuries (optional)</label>
+        <label class="ob-label es-inline">Lesiones pasadas o actuales (opcional)</label>
+        <input id="ob-injuries" type="text" class="ob-input" placeholder="e.g. ACL tear, shin splints / Desgarro LCA, espinillas"/>
+        <div class="ob-error" id="ob-err-3"></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="ob-back-btn" onclick="obBack(3)"><span class="en-inline">Back</span><span class="es-inline">Atrás</span></button>
+          <button class="ob-btn" style="flex:1" onclick="obNext(3)"><span class="en-inline">Continue</span><span class="es-inline">Continuar</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Contact -->
+      <div id="ob-s4" class="ob-step" style="display:none">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="en-inline">Step 4 — Contact (optional)</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D4A60;margin-bottom:10px" class="es-inline">Paso 4 — Contacto (opcional)</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:6px" class="en-inline">Almost done.</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:6px" class="es-inline">Casi listo.</div>
+        <div style="font-size:13px;color:#6B7A94;margin-bottom:20px;font-weight:300" class="en-inline">Add your contact info to receive updates. You can skip this.</div>
+        <div style="font-size:13px;color:#6B7A94;margin-bottom:20px;font-weight:300" class="es-inline">Agrega tu contacto para recibir actualizaciones. Puedes omitir esto.</div>
+        <label class="ob-label en-inline">Email address</label>
+        <label class="ob-label es-inline">Correo electrónico</label>
+        <input id="ob-email" type="email" class="ob-input" placeholder="you@email.com" style="margin-bottom:12px"/>
+        <label class="ob-label en-inline">Phone number</label>
+        <label class="ob-label es-inline">Número de teléfono</label>
+        <input id="ob-phone" type="tel" class="ob-input" placeholder="(555) 000-0000"/>
+        <div class="ob-error" id="ob-err-4"></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="ob-back-btn" onclick="obBack(4)"><span class="en-inline">Back</span><span class="es-inline">Atrás</span></button>
+          <button class="ob-btn" style="flex:1" id="ob-final-btn" onclick="obFinish()"><span class="en-inline">Create my profile</span><span class="es-inline">Crear mi perfil</span></button>
+        </div>
+        <button onclick="obFinish()" style="background:transparent;border:none;color:#3D4A60;font-size:12px;cursor:pointer;margin-top:12px;font-family:'DM Sans',sans-serif;display:block;text-align:center;width:100%;font-weight:500">
+          <span class="en-inline">Skip for now</span><span class="es-inline">Omitir por ahora</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="ob-success" style="display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(0,168,107,0.1);border:1px solid rgba(0,168,107,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-family:'DM Serif Display',serif;font-size:30px;color:#fff;font-style:italic;margin-bottom:8px">
+      <span class="en-inline" id="ob-welcome-name">Welcome to Atleta.</span>
+      <span class="es-inline" id="ob-welcome-name-es">Bienvenido a Atleta.</span>
+    </div>
+    <div style="font-size:14px;color:#6B7A94;line-height:1.7;max-width:280px;margin-bottom:32px;font-weight:300">
+      <span class="en-inline">Your profile is ready. You can view and edit it anytime from the menu.</span>
+      <span class="es-inline">Tu perfil está listo. Puedes verlo y editarlo desde el menú.</span>
+    </div>
+    <div id="ob-success-swirl" style="width:32px;height:32px;position:relative;margin-bottom:24px">
+      <div style="position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:#2C6EFF;animation:spin 1s linear infinite"></div>
+    </div>
+    <button id="ob-enter" onclick="doEnter()" style="display:none;background:#2C6EFF;color:#fff;padding:13px 36px;border-radius:8px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s">
+      <span class="en-inline">Enter Atleta</span>
+      <span class="es-inline">Entrar a Atleta</span>
+    </button>
+  </div>
+
+</div>
+
+<div class="lang-bar">
+  <span class="lang-bar-text en-inline">Select your language — Selecciona tu idioma</span>
+  <span class="lang-bar-text es-inline">Selecciona tu idioma — Select your language</span>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" title="Back to home">
+    <div class="nav-logo-mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+    <span class="nav-logo-text">Atleta<span>by Cancha</span></span>
+  </a>
+  <div class="nav-center">
+    <a href="#pillars" class="nav-link"><span class="en-inline">About</span><span class="es-inline">Acerca de</span></a>
+    <a href="#assessment" class="nav-link"><span class="en-inline">Assessment</span><span class="es-inline">Evaluación</span></a>
+    <a href="#recovery" class="nav-link"><span class="en-inline">Recovery tracker</span><span class="es-inline">Seguimiento</span></a>
+    <a href="#injuries" class="nav-link"><span class="en-inline">Injury library</span><span class="es-inline">Lesiones</span></a>
+    <a href="#doctors" class="nav-link"><span class="en-inline">Find a practice</span><span class="es-inline">Buscar clínica</span></a>
+  </div>
+  <div class="nav-right">
+    <a href="https://joincancha.com" target="_blank" class="nav-cancha">Cancha</a>
+    <a href="#assessment" class="nav-btn"><span class="en-inline">Begin assessment</span><span class="es-inline">Comenzar</span></a>
+  </div>
+  <button class="mob-btn" onclick="toggleMob()" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#" onclick="navTo('profile-section');return false" style="display:flex;align-items:center;gap:10px">
+    <div class="profile-av" id="mob-profile-av" style="width:32px;height:32px;font-size:14px;margin:0;flex-shrink:0">?</div>
+    <div>
+      <div class="user-display" style="font-size:15px;font-weight:600;color:#F0F3F8">Username</div>
+      <div style="font-size:11px;color:#6B7A94;font-weight:300"><span class="en-inline">View profile</span><span class="es-inline">Ver perfil</span></div>
+    </div>
+  </a>
+  <a href="#pillars" onclick="navTo('pillars')"><span class="en-inline">About</span><span class="es-inline">Acerca de</span></a>
+  <a href="#assessment" onclick="navTo('assessment')"><span class="en-inline">Assessment</span><span class="es-inline">Evaluación</span></a>
+  <a href="#recovery" onclick="navTo('recovery')"><span class="en-inline">Recovery tracker</span><span class="es-inline">Seguimiento</span></a>
+  <a href="#injuries" onclick="navTo('injuries')"><span class="en-inline">Injury library</span><span class="es-inline">Lesiones</span></a>
+  <a href="#doctors" onclick="navTo('doctors')"><span class="en-inline">Find a practice</span><span class="es-inline">Buscar clínica</span></a>
+  <a href="https://joincancha.com" target="_blank" onclick="document.getElementById('mobMenu').classList.remove('open')">Cancha</a>
+</div>
+
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMob()"></div>
+<div id="top" style="position:absolute;top:0"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner fade-up">
+    <div class="hero-tag">
+      <span class="en-inline">Bilingual · English & Spanish</span>
+      <div class="hero-tag-sep"></div>
+      <span class="es-inline">Bilingüe · Inglés y Español</span>
+      <span class="en-inline">Youth athlete platform</span>
+      <span class="es-inline">Plataforma para atletas jóvenes</span>
+    </div>
+    <h1>
+      <span class="en">Every athlete deserves to <em>stay in the game.</em></span>
+      <span class="es">Todo atleta merece <em>seguir en el juego.</em></span>
+    </h1>
+    <p class="hero-sub-en en"><strong>Atleta</strong> is the first bilingual injury prevention and recovery platform built specifically for Latino youth athletes — in the language they are most comfortable in.</p>
+    <p class="hero-sub-es es"><strong>Atleta</strong> es la primera plataforma bilingüe de prevención de lesiones y recuperación creada específicamente para atletas jóvenes latinos — en el idioma en que se sienten más cómodos.</p>
+    <div class="hero-actions">
+      <a href="#assessment" class="btn btn-blue"><span class="en-inline">Begin risk assessment</span><span class="es-inline">Comenzar evaluación</span></a>
+      <a href="#recovery" class="btn btn-outline"><span class="en-inline">Track my recovery</span><span class="es-inline">Registrar mi recuperación</span></a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><div class="proof-num">EN/ES</div><div class="proof-label en">Full bilingual platform</div><div class="proof-label es">Plataforma completamente bilingüe</div></div>
+      <div class="proof-sep"></div>
+      <div class="proof-item"><div class="proof-num">AI</div><div class="proof-label en">Personalized analysis</div><div class="proof-label es">Análisis personalizado</div></div>
+      <div class="proof-sep"></div>
+      <div class="proof-item"><div class="proof-num">Free</div><div class="proof-label en">Always, for every athlete</div><div class="proof-label es">Siempre gratuito</div></div>
+      <div class="proof-sep"></div>
+      <div class="proof-item"><div class="proof-num">All sports</div><div class="proof-label en">Every discipline</div><div class="proof-label es">Todos los deportes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="section pillars-bg" id="pillars">
+  <div class="si">
+    <div class="fade-up">
+      <div class="eyebrow"><span class="en-inline">What Atleta offers</span><span class="es-inline">Lo que ofrece Atleta</span></div>
+      <h2><span class="en">Prevention and recovery, <span class="dim">in one place.</span></span><span class="es">Prevención y recuperación, <span class="dim">en un solo lugar.</span></span></h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon pi-blue"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="pillar-title en">Injury Risk Assessment</div>
+        <div class="pillar-title es">Evaluación de Riesgo de Lesión</div>
+        <p class="pillar-desc en">Answer six questions and receive a personalized AI-generated injury risk report specific to your sport, history, and physical condition.</p>
+        <p class="pillar-desc es">Responde seis preguntas y recibe un informe personalizado de riesgo de lesión generado por inteligencia artificial, específico para tu deporte, historial y condición física.</p>
+      </div>
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon pi-green"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="pillar-title en">Recovery Progress Tracker</div>
+        <div class="pillar-title es">Seguimiento de Recuperación</div>
+        <p class="pillar-desc en">Log your daily pain levels, completed therapy exercises, and notes. AI analyzes your entries and provides recovery feedback over time.</p>
+        <p class="pillar-desc es">Registra tus niveles de dolor diarios, ejercicios de terapia completados y notas. La IA analiza tus entradas y proporciona retroalimentación sobre tu recuperación.</p>
+      </div>
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon pi-purple"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="pillar-title en">Bilingual Injury Library</div>
+        <div class="pillar-title es">Biblioteca de Lesiones Bilingüe</div>
+        <p class="pillar-desc en">Every common youth sports injury explained in plain language — in both English and Spanish. Prevention protocols, warning signs, and recovery timelines.</p>
+        <p class="pillar-desc es">Cada lesión deportiva juvenil común explicada en lenguaje sencillo — en inglés y español. Protocolos de prevención, señales de alerta y tiempos de recuperación.</p>
+      </div>
+      <div class="pillar-card fade-up">
+        <div class="pillar-icon pi-amber"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <div class="pillar-title en">Sports Medicine Practice Finder</div>
+        <div class="pillar-title es">Buscador de Clínicas de Medicina Deportiva</div>
+        <p class="pillar-desc en">Find top-rated sports medicine and orthopedic practices near you, with bilingual staff indicators and direct links to practice websites.</p>
+        <p class="pillar-desc es">Encuentra clínicas de medicina deportiva y ortopedia bien valoradas cerca de ti, con indicadores de personal bilingüe y enlaces directos a los sitios web de las clínicas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<section class="section assess-bg" id="assessment">
+  <div class="si-narrow">
+    <div class="fade-up" style="text-align:center;margin-bottom:36px">
+      <div class="eyebrow"><span class="en-inline">Injury risk assessment</span><span class="es-inline">Evaluación de riesgo de lesión</span></div>
+      <h2><span class="en">Your personalized <span class="dim">risk report.</span></span><span class="es">Tu informe de <span class="dim">riesgo personalizado.</span></span></h2>
+      <p class="section-sub en" style="margin:0 auto;text-align:center">Six questions. AI-generated analysis. Completed in under two minutes.</p>
+      <p class="section-sub es" style="margin:0 auto;text-align:center">Seis preguntas. Análisis generado por IA. Completado en menos de dos minutos.</p>
+    </div>
+    <div class="assess-shell" id="assess-shell">
+      <div class="assess-top">
+        <div class="assess-brand"><div class="assess-line"></div><span class="en-inline">Atleta Assessment</span><span class="es-inline">Evaluación Atleta</span></div>
+        <div class="assess-count" id="a-counter">1 / 6</div>
+      </div>
+      <div class="assess-bar"><div class="assess-bar-fill" id="a-bar"></div></div>
+      <div class="assess-body">
+        <div class="q-section" id="q-section"></div>
+        <div class="q-text" id="q-text"></div>
+        <div class="q-opts" id="q-opts"></div>
+      </div>
+      <div class="assess-foot">
+        <button class="a-back" id="a-back" onclick="prevQ()" style="visibility:hidden"><span class="en-inline">Back</span><span class="es-inline">Atrás</span></button>
+        <button class="a-next" id="a-next" onclick="nextQ()" disabled><span class="en-inline">Continue</span><span class="es-inline">Continuar</span></button>
+      </div>
+    </div>
+    <div class="result-shell" id="result-shell"></div>
+  </div>
+</section>
+
+<!-- RECOVERY TRACKER -->
+<section class="section recovery-bg" id="recovery">
+  <div class="si-narrow">
+    <div class="fade-up" style="text-align:center;margin-bottom:36px">
+      <div class="eyebrow"><span class="en-inline">Recovery tracker</span><span class="es-inline">Seguimiento de recuperación</span></div>
+      <h2><span class="en">Log your <span class="dim">daily recovery.</span></span><span class="es">Registra tu <span class="dim">recuperación diaria.</span></span></h2>
+      <p class="section-sub en" style="margin:0 auto;text-align:center">Track your pain levels, therapy exercises, and progress. AI provides feedback on your recovery over time.</p>
+      <p class="section-sub es" style="margin:0 auto;text-align:center">Registra tus niveles de dolor, ejercicios de terapia y progreso. La IA proporciona retroalimentación sobre tu recuperación.</p>
+    </div>
+    <div class="recovery-card">
+      <div class="recovery-head">
+        <div class="recovery-title"><div class="rec-line"></div><span class="en-inline">Daily Recovery Log</span><span class="es-inline">Registro Diario de Recuperación</span></div>
+        <div style="font-size:11px;color:var(--dim)" id="rec-date"></div>
+      </div>
+      <div class="recovery-body">
+        <div class="rec-field">
+          <label class="rec-label en">Injury / Area being treated</label>
+          <label class="rec-label es">Lesión / Área en tratamiento</label>
+          <input class="rec-input" id="rec-injury" type="text" placeholder="e.g. Left knee ACL / Rodilla izquierda LCA"/>
+        </div>
+        <div class="rec-field">
+          <label class="rec-label en">Pain level today (0 = no pain, 10 = severe)</label>
+          <label class="rec-label es">Nivel de dolor hoy (0 = sin dolor, 10 = severo)</label>
+          <div class="pain-scale" id="pain-scale"></div>
+        </div>
+        <div class="rec-field">
+          <label class="rec-label en">Therapy exercises completed today</label>
+          <label class="rec-label es">Ejercicios de terapia completados hoy</label>
+          <select class="rec-select" id="rec-exercises">
+            <option value="" disabled selected>Select / Seleccionar</option>
+            <option value="Range of motion / Rango de movimiento">Range of motion / Rango de movimiento</option>
+            <option value="Strengthening / Fortalecimiento">Strengthening / Fortalecimiento</option>
+            <option value="Stretching / Estiramiento">Stretching / Estiramiento</option>
+            <option value="Ice and elevation / Hielo y elevación">Ice and elevation / Hielo y elevación</option>
+            <option value="Walking / Caminata">Walking / Caminata</option>
+            <option value="Pool therapy / Terapia en piscina">Pool therapy / Terapia en piscina</option>
+            <option value="None today / Ninguno hoy">None today / Ninguno hoy</option>
+          </select>
+        </div>
+        <div class="rec-field">
+          <label class="rec-label en">Notes — how are you feeling today?</label>
+          <label class="rec-label es">Notas — ¿cómo te sientes hoy?</label>
+          <textarea class="rec-textarea" id="rec-notes" rows="3" placeholder="Describe your symptoms, progress, or how you feel mentally and physically today..."></textarea>
+        </div>
+        <button class="rec-submit" onclick="logRecovery()">
+          <span class="en-inline">Save today's entry and get AI feedback</span>
+          <span class="es-inline">Guardar entrada de hoy y obtener retroalimentación</span>
+        </button>
+        <div id="rec-log"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INJURY LIBRARY -->
+<section class="section inj-bg" id="injuries">
+  <div class="si">
+    <div class="fade-up">
+      <div class="eyebrow"><span class="en-inline">Injury library</span><span class="es-inline">Biblioteca de lesiones</span></div>
+      <h2><span class="en">Know what you're <span class="dim">dealing with.</span></span><span class="es">Conoce con qué <span class="dim">estás lidiando.</span></span></h2>
+      <p class="section-sub en">Common youth sports injuries in plain language — in English and Spanish. Select any card to expand.</p>
+      <p class="section-sub es">Lesiones deportivas juveniles comunes en lenguaje sencillo — en inglés y español. Selecciona cualquier tarjeta para expandir.</p>
+    </div>
+    <div class="inj-grid">
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Knee — Ligament / Rodilla — Ligamento</div>
+        <div class="inj-name en">ACL Tear</div><div class="inj-name es">Desgarro del LCA</div>
+        <div class="inj-name-es">Ligamento Cruzado Anterior</div>
+        <div class="inj-desc en">Anterior cruciate ligament rupture typically occurring during cutting, pivoting, or landing. One of the most serious injuries in youth sport.</div>
+        <div class="inj-desc es">Ruptura del ligamento cruzado anterior que ocurre típicamente durante cambios de dirección, pivotes o aterrizajes. Una de las lesiones más graves en el deporte juvenil.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-high"></div></div><div class="inj-sev-text" style="color:var(--red)"><span class="en-inline">High severity</span><span class="es-inline">Gravedad alta</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Strengthen quadriceps, hamstrings, and glutes. Practice proper landing mechanics. Use FIFA 11+ warmup program.</span>
+          <span class="es"> Fortalecer cuádriceps, isquiotibiales y glúteos. Practicar mecánicas de aterrizaje correctas. Usar el programa de calentamiento FIFA 11+.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Popping sound at injury, immediate swelling, knee instability, inability to bear weight.</span>
+          <span class="es"> Sonido de chasquido al lesionarse, hinchazón inmediata, inestabilidad de rodilla, incapacidad para soportar peso.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 9–12 months post-surgery with structured rehabilitation.</span>
+          <span class="es"> 9–12 meses después de la cirugía con rehabilitación estructurada.</span>
+        </div>
+      </div>
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Hip — Cartilage / Cadera — Cartílago</div>
+        <div class="inj-name en">Hip Labral Tear</div><div class="inj-name es">Desgarro del Labrum de Cadera</div>
+        <div class="inj-name-es">Labrum Acetabular</div>
+        <div class="inj-desc en">Tearing of the acetabular labrum from repetitive hip rotation. Often underdiagnosed in young athletes. Common in soccer and dance.</div>
+        <div class="inj-desc es">Desgarro del labrum acetabular por rotación repetitiva de cadera. Frecuentemente subdiagnosticado en atletas jóvenes. Común en fútbol y danza.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-high"></div></div><div class="inj-sev-text" style="color:var(--red)"><span class="en-inline">High severity</span><span class="es-inline">Gravedad alta</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Hip flexor and external rotator strengthening. Controlled training load. Structured warmup with hip mobility work.</span>
+          <span class="es"> Fortalecer flexores de cadera y rotadores externos. Carga de entrenamiento controlada. Calentamiento estructurado con trabajo de movilidad de cadera.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Deep groin pain, clicking or locking sensation in hip, pain when sitting for long periods.</span>
+          <span class="es"> Dolor profundo en la ingle, sensación de clic o bloqueo en la cadera, dolor al sentarse por períodos prolongados.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 3–6 months conservative; 9–12 months post-surgery.</span>
+          <span class="es"> 3–6 meses conservador; 9–12 meses después de cirugía.</span>
+        </div>
+      </div>
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Bone — Overuse / Hueso — Sobreuso</div>
+        <div class="inj-name en">Stress Fracture</div><div class="inj-name es">Fractura por Estrés</div>
+        <div class="inj-name-es">Fractura por Fatiga Ósea</div>
+        <div class="inj-desc en">Small bone crack from repetitive loading. Most common in feet, shins, and lower legs. Often mistaken for general soreness.</div>
+        <div class="inj-desc es">Pequeña fractura ósea por carga repetitiva. Más común en pies, espinillas y piernas. A menudo confundida con dolor muscular general.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-med"></div></div><div class="inj-sev-text" style="color:var(--amber)"><span class="en-inline">Moderate severity</span><span class="es-inline">Gravedad moderada</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Gradual training increases. Proper footwear. Adequate calcium and vitamin D. Scheduled rest days.</span>
+          <span class="es"> Aumentos graduales de entrenamiento. Calzado adecuado. Calcio y vitamina D suficientes. Días de descanso programados.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Pain worsening during activity and easing at rest. Tenderness directly on bone. Mild swelling.</span>
+          <span class="es"> Dolor que empeora durante la actividad y mejora en reposo. Sensibilidad directamente sobre el hueso. Leve hinchazón.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 6–8 weeks with rest and load modification.</span>
+          <span class="es"> 6–8 semanas con reposo y modificación de carga.</span>
+        </div>
+      </div>
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Shoulder — Tendon / Hombro — Tendón</div>
+        <div class="inj-name en">Rotator Cuff Strain</div><div class="inj-name es">Distensión del Manguito Rotador</div>
+        <div class="inj-name-es">Manguito de los Rotadores</div>
+        <div class="inj-desc en">Injury to the shoulder stabilizing tendons. Common in overhead athletes — baseball, swimming, volleyball. Ranges from strain to full tear.</div>
+        <div class="inj-desc es">Lesión de los tendones estabilizadores del hombro. Común en atletas de movimientos sobre la cabeza. Va desde distensión hasta desgarro completo.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-med"></div></div><div class="inj-sev-text" style="color:var(--amber)"><span class="en-inline">Moderate severity</span><span class="es-inline">Gravedad moderada</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Rotator cuff strengthening. Proper throwing mechanics. Pitch count limits. Periodized training load.</span>
+          <span class="es"> Fortalecimiento del manguito rotador. Mecánicas correctas de lanzamiento. Límites de lanzamientos. Carga de entrenamiento periodizada.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Pain lifting arm overhead, weakness rotating arm, nocturnal shoulder pain.</span>
+          <span class="es"> Dolor al levantar el brazo, debilidad al rotar el brazo, dolor nocturno en el hombro.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 4–6 weeks for strains; 3–6 months surgical cases.</span>
+          <span class="es"> 4–6 semanas para distensiones; 3–6 meses casos quirúrgicos.</span>
+        </div>
+      </div>
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Lower Leg — Overuse / Pierna — Sobreuso</div>
+        <div class="inj-name en">Shin Splints</div><div class="inj-name es">Dolor de Espinilla</div>
+        <div class="inj-name-es">Síndrome de Estrés Tibial Medial</div>
+        <div class="inj-desc en">Periosteal inflammation along the inner shinbone from repetitive loading. Highly prevalent in early-season training periods.</div>
+        <div class="inj-desc es">Inflamación del periostio a lo largo de la espinilla interna por carga repetitiva. Muy frecuente en períodos de entrenamiento de inicio de temporada.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-low"></div></div><div class="inj-sev-text" style="color:var(--green)"><span class="en-inline">Low — Moderate</span><span class="es-inline">Baja — Moderada</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Gradual mileage increases. Footwear assessment. Calf strengthening and flexibility. Avoid sudden surface changes.</span>
+          <span class="es"> Aumentos graduales de kilometraje. Evaluación del calzado. Fortalecimiento y flexibilidad de gemelos. Evitar cambios bruscos de superficie.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Inner shin pain during activity, tenderness along shinbone, mild swelling.</span>
+          <span class="es"> Dolor en la espinilla interna durante la actividad, sensibilidad a lo largo de la espinilla, leve hinchazón.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 2–6 weeks with load modification.</span>
+          <span class="es"> 2–6 semanas con modificación de carga.</span>
+        </div>
+      </div>
+      <div class="inj-card fade-up" onclick="toggleInj(this)">
+        <div class="inj-cat">Brain — Traumatic / Cerebro — Traumático</div>
+        <div class="inj-name en">Concussion</div><div class="inj-name es">Conmoción Cerebral</div>
+        <div class="inj-name-es">Traumatismo Craneoencefálico Leve</div>
+        <div class="inj-desc en">Mild traumatic brain injury from impact forces. Substantially underreported in youth and Latino athletic communities. Never ignore.</div>
+        <div class="inj-desc es">Lesión cerebral traumática leve por fuerzas de impacto. Significativamente subregistrada en comunidades atléticas juveniles y latinas. Nunca ignorar.</div>
+        <div class="inj-sev-row"><div class="inj-sev-bar"><div class="inj-sev-fill sf-high"></div></div><div class="inj-sev-text" style="color:var(--red)"><span class="en-inline">High — Never ignore</span><span class="es-inline">Alta — Nunca ignorar</span></div></div>
+        <div class="inj-toggle"><span class="en-inline">View details / Prevention</span><span class="es-inline">Ver detalles / Prevención</span></div>
+        <div class="inj-expand">
+          <strong class="en">Prevention:</strong><strong class="es">Prevención:</strong>
+          <span class="en"> Proper technique. Protective equipment. Mandatory removal from play after suspected concussion.</span>
+          <span class="es"> Técnica correcta. Equipo protector. Retiro obligatorio del juego tras sospecha de conmoción.</span>
+          <br><br>
+          <strong class="en">Warning signs:</strong><strong class="es">Señales de alerta:</strong>
+          <span class="en"> Headache, dizziness, confusion, memory problems, sensitivity to light or noise, feeling foggy.</span>
+          <span class="es"> Dolor de cabeza, mareos, confusión, problemas de memoria, sensibilidad a la luz o ruido, sensación de aturdimiento.</span>
+          <br><br>
+          <strong class="en">Recovery:</strong><strong class="es">Recuperación:</strong>
+          <span class="en"> 7–14 days minimum. Graduated return-to-sport protocol mandatory. Second impact can be fatal.</span>
+          <span class="es"> Mínimo 7–14 días. Protocolo gradual de regreso obligatorio. El segundo impacto puede ser fatal.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTOR FINDER -->
+<section class="section doc-bg" id="doctors">
+  <div class="si">
+    <div class="fade-up">
+      <div class="eyebrow"><span class="en-inline">Practice directory</span><span class="es-inline">Directorio de clínicas</span></div>
+      <h2><span class="en">Sports medicine practices <span class="dim">near you.</span></span><span class="es">Clínicas de medicina deportiva <span class="dim">cerca de ti.</span></span></h2>
+      <p class="section-sub en" style="margin-bottom:32px">Find accredited sports medicine practices in your area. Practices with bilingual staff are highlighted.</p>
+      <p class="section-sub es" style="margin-bottom:32px">Encuentra clínicas acreditadas de medicina deportiva en tu área. Las clínicas con personal bilingüe están destacadas.</p>
+    </div>
+    <div class="doc-search fade-up">
+      <input class="doc-input" id="loc-input" type="text" placeholder="City, state or zip / Ciudad, estado o código postal"/>
+      <select class="doc-select" id="spec-input">
+        <option value="sports medicine">Sports medicine / Medicina deportiva</option>
+        <option value="orthopedic surgery">Orthopedic surgery / Cirugía ortopédica</option>
+        <option value="physical therapy">Physical therapy / Fisioterapia</option>
+        <option value="pediatric sports medicine">Pediatric sports medicine / Medicina deportiva pediátrica</option>
+      </select>
+      <button class="doc-btn" onclick="findPractices()"><span class="en-inline">Search</span><span class="es-inline">Buscar</span></button>
+    </div>
+    <div id="doc-results"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- PROFILE -->
+<section class="section" id="profile-section" style="background:var(--black)">
+  <div class="si-narrow">
+    <div class="fade-up">
+      <div class="eyebrow"><span class="en-inline">My profile</span><span class="es-inline">Mi perfil</span></div>
+      <h2><span class="en">Your <span class="dim">athlete profile.</span></span><span class="es">Tu <span class="dim">perfil atlético.</span></span></h2>
+    </div>
+    <div style="background:var(--ink);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:32px" class="fade-up">
+      <div class="profile-section">
+        <div class="profile-av" id="profile-av-main">?</div>
+        <div class="profile-username user-display" id="profile-username-display">—</div>
+        <div class="profile-joined" id="profile-joined"></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Name</div><div class="profile-row-label es-inline">Nombre</div><div class="profile-row-value" id="pf-name">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Age</div><div class="profile-row-label es-inline">Edad</div><div class="profile-row-value" id="pf-age">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Gender</div><div class="profile-row-label es-inline">Género</div><div class="profile-row-value" id="pf-gender">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Sport</div><div class="profile-row-label es-inline">Deporte</div><div class="profile-row-value" id="pf-sport">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Injuries</div><div class="profile-row-label es-inline">Lesiones</div><div class="profile-row-value" id="pf-injuries">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Email</div><div class="profile-row-label es-inline">Correo</div><div class="profile-row-value" id="pf-email">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Phone</div><div class="profile-row-label es-inline">Teléfono</div><div class="profile-row-value" id="pf-phone">—</div></div>
+        <div class="profile-row"><div class="profile-row-label en-inline">Member since</div><div class="profile-row-label es-inline">Miembro desde</div><div class="profile-row-value" id="pf-joined">—</div></div>
+        <button class="profile-edit-btn" onclick="resetOnboarding()"><span class="en-inline">Edit profile</span><span class="es-inline">Editar perfil</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Atleta</div>
+      <p class="footer-desc en">A bilingual injury prevention and recovery platform for Latino youth athletes. Free, always. A Cancha initiative founded by Stacy Guevara.</p>
+      <p class="footer-desc es">Una plataforma bilingüe de prevención de lesiones y recuperación para atletas jóvenes latinos. Siempre gratuita. Una iniciativa de Cancha fundada por Stacy Guevara.</p>
+    </div>
+    <div class="footer-col">
+      <h4><span class="en-inline">Platform</span><span class="es-inline">Plataforma</span></h4>
+      <a href="#assessment"><span class="en-inline">Risk assessment</span><span class="es-inline">Evaluación de riesgo</span></a>
+      <a href="#recovery"><span class="en-inline">Recovery tracker</span><span class="es-inline">Seguimiento de recuperación</span></a>
+      <a href="#injuries"><span class="en-inline">Injury library</span><span class="es-inline">Biblioteca de lesiones</span></a>
+      <a href="#doctors"><span class="en-inline">Find a practice</span><span class="es-inline">Buscar clínica</span></a>
+    </div>
+    <div class="footer-col">
+      <h4>Cancha</h4>
+      <a href="https://joincancha.com" target="_blank">joincancha.com</a>
+      <a href="https://www.gofundme.com/f/give-kids-in-central-america-a-chance-to-play" target="_blank"><span class="en-inline">Donate</span><span class="es-inline">Donar</span></a>
+    </div>
+    <div class="footer-col">
+      <h4><span class="en-inline">Resources</span><span class="es-inline">Recursos</span></h4>
+      <a href="https://www.healthgrades.com" target="_blank">Healthgrades</a>
+      <a href="https://www.zocdoc.com" target="_blank">Zocdoc</a>
+      <a href="https://www.stopsportsinjuries.org" target="_blank">Stop Sports Injuries</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">2025 Atleta — a Cancha initiative · Founded by Stacy Guevara · Long Island, NY</p>
+    <p class="footer-copy" style="font-style:italic"><span class="en-inline">For educational purposes only. Not a substitute for professional medical advice.</span><span class="es-inline">Solo con fines educativos. No sustituye el consejo médico profesional.</span></p>
+  </div>
+</footer>
+
+<script>
+// ── MOBILE MENU ──
+function toggleMob(){
+  var menu = document.getElementById('mobMenu');
+  var overlay = document.getElementById('mobOverlay');
+  var isOpen = menu.classList.toggle('open');
+  overlay.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function navTo(id){
+  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('mobOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(function(){
+    var el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  }, 100);
+}
+
+// ── LANGUAGE ──
+function setLang(lang){
+  document.body.className = lang === 'es' ? 'lang-es' : '';
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  currentLang = lang;
+  renderQ();
+}
+var currentLang = 'en';
+
+// ── SCROLL ANIMATIONS ──
+var obs = new IntersectionObserver(function(e){ e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('vis'); }); },{threshold:0.07});
+document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
+
+// ── INJURY LIBRARY ──
+function toggleInj(card){
+  var e=card.querySelector('.inj-expand'), t=card.querySelector('.inj-toggle');
+  var o=e.classList.toggle('open');
+  if(currentLang==='es') t.textContent=o?'Ocultar detalles':'Ver detalles / Prevención';
+  else t.textContent=o?'Collapse details':'View details / Prevention';
+}
+
+// ── RECOVERY DATE ──
+document.getElementById('rec-date').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+// ── PAIN SCALE ──
+var selectedPain = null;
+var painDiv = document.getElementById('pain-scale');
+for(var i=0;i<=10;i++){
+  (function(n){
+    var btn=document.createElement('button');
+    btn.className='pain-btn';
+    btn.textContent=n;
+    btn.onclick=function(){
+      document.querySelectorAll('.pain-btn').forEach(function(b){b.classList.remove('sel-pain');});
+      btn.classList.add('sel-pain');
+      selectedPain=n;
+    };
+    painDiv.appendChild(btn);
+  })(i);
+}
+
+// ── RECOVERY LOG ──
+var recoveryEntries = [];
+async function logRecovery(){
+  var injury = document.getElementById('rec-injury').value.trim();
+  var exercise = document.getElementById('rec-exercises').value;
+  var notes = document.getElementById('rec-notes').value.trim();
+  var isEs = currentLang === 'es';
+  if(!injury){ alert(isEs?'Por favor ingresa tu lesión o área en tratamiento.':'Please enter your injury or area being treated.'); return; }
+  if(selectedPain === null){ alert(isEs?'Por favor selecciona tu nivel de dolor.':'Please select your pain level.'); return; }
+
+  var entry = { date: new Date().toLocaleDateString(), injury, pain: selectedPain, exercise, notes, feedback: null };
+  recoveryEntries.unshift(entry);
+  renderLog(true);
+
+  try {
+    var notesText = notes ? notes : (currentLang==='es' ? 'Sin notas adicionales.' : 'No additional notes provided.');
+    var prompt = currentLang === 'es'
+      ? 'Eres un asistente clínico de recuperación deportiva en Atleta. Un atleta registró lo siguiente hoy:\n\nLesión: '+injury+'\nNivel de dolor: '+selectedPain+'/10\nEjercicio completado: '+exercise+'\nNotas del atleta: '+notesText+'\n\nResponde directamente a lo que el atleta escribió en sus notas. Si mencionan dolor, dificultad o preocupación específica, abórdala. Si el nivel de dolor es alto (7+), recomienda contactar a su médico. Proporciona 2-3 oraciones de retroalimentación clínica personalizada en español que respondan específicamente a sus notas.'
+      : 'You are a clinical sports recovery assistant on Atleta. An athlete logged the following today:\n\nInjury: '+injury+'\nPain level: '+selectedPain+'/10\nExercise completed: '+exercise+'\nAthlete notes: '+notesText+'\n\nRespond directly and specifically to what the athlete wrote in their notes. If they mention specific pain, difficulty, or concern, address it directly. If pain level is high (7+), recommend contacting their doctor. Provide 2-3 sentences of personalized clinical feedback that directly responds to their notes and situation.';
+    var res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:prompt}]})});
+    var data = await res.json();
+    entry.feedback = data.content[0].text;
+    renderLog(false);
+  } catch(e) {
+    entry.feedback = isEs ? 'Excelente trabajo registrando tu recuperación hoy. La consistencia es clave para una recuperación exitosa.' : 'Great job logging your recovery today. Consistency is key to a successful recovery.';
+    renderLog(false);
+  }
+
+  document.getElementById('rec-injury').value='';
+  document.getElementById('rec-notes').value='';
+  document.getElementById('rec-exercises').selectedIndex=0;
+  document.querySelectorAll('.pain-btn').forEach(function(b){b.classList.remove('sel-pain');});
+  selectedPain=null;
+}
+
+function renderLog(loading){
+  var log = document.getElementById('rec-log');
+  log.innerHTML = '';
+  recoveryEntries.forEach(function(e,i){
+    var painClass = e.pain<=3?'rep-low':e.pain<=6?'rep-med':'rep-high';
+    var div=document.createElement('div');
+    div.className='rec-entry';
+    div.innerHTML='<div class="rec-entry-head"><div class="rec-entry-date">'+e.date+' — '+e.injury+'</div><div class="rec-entry-pain '+painClass+'">Pain: '+e.pain+'/10</div></div>';
+    if(e.exercise) div.innerHTML+='<div class="rec-entry-note" style="margin-bottom:4px">'+e.exercise+'</div>';
+    if(e.notes) div.innerHTML+='<div class="rec-entry-note">'+e.notes+'</div>';
+    if(i===0){
+      if(loading||!e.feedback){
+        div.innerHTML+='<div class="rec-ai-feedback"><div class="spinner" style="width:18px;height:18px;margin:0 0 6px"></div><span style="font-size:12px">Generating feedback...</span></div>';
+      } else {
+        div.innerHTML+='<div class="rec-ai-feedback">'+e.feedback+'</div>';
+      }
+    }
+    log.appendChild(div);
+  });
+}
+
+// ── ASSESSMENT ──
+var qs = {
+  en:[
+    {s:'Section 1 — Sport profile',q:'What sport do you primarily play?',o:['Soccer','Basketball','Football','Baseball or Softball','Tennis or Volleyball','Track or Cross country','Swimming','Gymnastics or Dance','Another sport']},
+    {s:'Section 2 — Training load',q:'How many hours per week do you train?',o:['Fewer than 5 hours','5 to 10 hours','10 to 15 hours','More than 15 hours']},
+    {s:'Section 3 — Injury history',q:'Have you had a sports injury in the past two years?',o:['No previous injuries','Minor injury — back in under four weeks','Moderate injury — out one to three months','Serious injury — out three or more months, or had surgery']},
+    {s:'Section 4 — Current symptoms',q:'Do you currently have any pain during athletic activity?',o:['No pain at all','Mild discomfort that goes away after warmup','Pain during activity that I push through','Pain that changes how I move','I have stopped playing due to pain']},
+    {s:'Section 5 — Recovery habits',q:'How would you describe your warmup and recovery routine?',o:['I always warm up and cool down properly','I sometimes skip warmup or cooldown','I rarely warm up or cool down','I do not have a routine']},
+    {s:'Section 6 — Conditioning',q:'How would you rate your overall physical conditioning?',o:['Excellent — I strength train regularly','Good — I stay active but do not cross-train','Fair — I mostly just practice my sport','Returning after a period of inactivity']}
+  ],
+  es:[
+    {s:'Sección 1 — Perfil deportivo',q:'¿Qué deporte practicas principalmente?',o:['Fútbol','Baloncesto','Fútbol americano','Béisbol o Sóftbol','Tenis o Voleibol','Atletismo o Campo traviesa','Natación','Gimnasia o Danza','Otro deporte']},
+    {s:'Sección 2 — Carga de entrenamiento',q:'¿Cuántas horas por semana entrenas?',o:['Menos de 5 horas','5 a 10 horas','10 a 15 horas','Más de 15 horas']},
+    {s:'Sección 3 — Historial de lesiones',q:'¿Has tenido una lesión deportiva en los últimos dos años?',o:['Sin lesiones previas','Lesión leve — regresé en menos de cuatro semanas','Lesión moderada — fuera uno a tres meses','Lesión grave — fuera tres o más meses, o cirugía']},
+    {s:'Sección 4 — Síntomas actuales',q:'¿Tienes actualmente algún dolor durante la actividad deportiva?',o:['Sin dolor','Leve molestia que desaparece al calentar','Dolor durante la actividad que ignoro','Dolor que cambia cómo me muevo','He dejado de jugar por el dolor']},
+    {s:'Sección 5 — Hábitos de recuperación',q:'¿Cómo describirías tu rutina de calentamiento y recuperación?',o:['Siempre caliento y enfrío correctamente','A veces omito el calentamiento o enfriamiento','Rara vez caliento o enfrío','No tengo una rutina']},
+    {s:'Sección 6 — Acondicionamiento',q:'¿Cómo calificarías tu condición física general?',o:['Excelente — entreno fuerza regularmente','Buena — me mantengo activo pero no hago entrenamiento cruzado','Regular — principalmente practico mi deporte','Regresando después de un período de inactividad']}
+  ]
+};
+var ans=[],cur=0;
+
+function renderQ(){
+  var lang = currentLang;
+  var q = qs[lang][cur];
+  document.getElementById('q-section').textContent = q.s;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('a-counter').textContent = (cur+1)+' / 6';
+  document.getElementById('a-bar').style.width = (cur/6*100)+'%';
+  document.getElementById('a-back').style.visibility = cur>0?'visible':'hidden';
+  var nx=document.getElementById('a-next');
+  nx.disabled=ans[cur]===undefined;
+  nx.innerHTML=cur===5?('<span class="en-inline">Generate report</span><span class="es-inline">Generar informe</span>'):('<span class="en-inline">Continue</span><span class="es-inline">Continuar</span>');
+  var opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  q.o.forEach(function(opt,i){
+    var btn=document.createElement('button');
+    btn.className='q-opt'+(ans[cur]===i?' sel':'');
+    btn.innerHTML='<div class="q-radio"><div class="q-dot"></div></div>'+opt;
+    btn.onclick=function(){
+      document.querySelectorAll('.q-opt').forEach(function(b){b.classList.remove('sel');});
+      btn.classList.add('sel'); ans[cur]=i;
+      document.getElementById('a-next').disabled=false;
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function nextQ(){ if(ans[cur]===undefined)return; if(cur<5){cur++;renderQ();}else{runAssessment();} }
+function prevQ(){ if(cur>0){cur--;renderQ();} }
+
+async function runAssessment(){
+  document.getElementById('a-bar').style.width='100%';
+  document.getElementById('assess-shell').style.display='none';
+  var rs=document.getElementById('result-shell');
+  rs.style.display='block';
+  var isEs=currentLang==='es';
+  rs.innerHTML='<div class="loading-box"><div class="spinner"></div><div class="loading-text">'+(isEs?'Analizando tus respuestas...':'Analyzing your responses...')+'</div></div>';
+  var summary=qs[currentLang].map(function(q,i){return q.q+' — '+(q.o[ans[i]]||'—');}).join('\n');
+  var prompt = isEs
+    ? 'Eres una IA clínica de medicina deportiva en Atleta. Un atleta joven completó esta evaluación en español:\n\n'+summary+'\n\nResponde SOLO con JSON válido sin markdown. Claves: risk_level (Bajo/Moderado/Alto), risk_summary (una oración clínica en español, máx 25 palabras), top_risks (array de 3 riesgos específicos en español), prevention_tips (array de 4 recomendaciones en español), see_doctor (boolean), doctor_reason (una oración si true, vacío si false, en español), message (2-3 oraciones de orientación profesional alentadora en español)'
+    : 'You are a clinical sports medicine AI on Atleta. A youth athlete completed this assessment:\n\n'+summary+'\n\nRespond ONLY with valid JSON, no markdown. Keys: risk_level (Low/Moderate/High), risk_summary (one clinical sentence under 25 words), top_risks (array of 3 specific risks), prevention_tips (array of 4 recommendations), see_doctor (boolean), doctor_reason (one sentence if true, empty if false), message (2-3 sentences of professional encouraging guidance)';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    var data=await res.json();
+    var result=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+    var rcc=result.risk_level==='Low'||result.risk_level==='Bajo'?'rc-low':result.risk_level==='Moderate'||result.risk_level==='Moderado'?'rc-med':'rc-high';
+    rs.innerHTML=
+      '<div class="result-top"><div class="result-title-text">'+(isEs?'Informe de Riesgo de Lesión':'Injury Risk Assessment Report')+'</div><div class="risk-chip '+rcc+'">'+result.risk_level+' '+(isEs?'Riesgo':'Risk')+'</div></div>'+
+      '<div class="result-body">'+
+        '<div><div class="rb-label">'+(isEs?'Resumen clínico':'Clinical summary')+'</div><div style="font-size:14px;color:var(--light);font-weight:300;line-height:1.65">'+result.risk_summary+'</div></div>'+
+        '<div><div class="rb-label">'+(isEs?'Principales riesgos identificados':'Primary risks identified')+'</div><div class="rb-items">'+result.top_risks.map(function(r){return'<div class="rb-item"><div class="rb-dot"></div>'+r+'</div>';}).join('')+'</div></div>'+
+        '<div><div class="rb-label">'+(isEs?'Plan de prevención recomendado':'Recommended prevention plan')+'</div><div class="rb-items">'+result.prevention_tips.map(function(t){return'<div class="rb-item"><div class="rb-dot" style="background:var(--green)"></div>'+t+'</div>';}).join('')+'</div></div>'+
+        '<div class="result-msg">'+result.message+'</div>'+
+        (result.see_doctor?'<div class="result-alert"><div class="result-alert-label">'+(isEs?'Recomendación clínica':'Clinical recommendation')+'</div><div class="result-alert-text">'+result.doctor_reason+'</div></div>':'')+
+      '</div>'+
+      '<div class="result-foot"><button onclick="retake()" class="btn btn-outline" style="font-size:12px;padding:8px 18px">'+(isEs?'Repetir evaluación':'Retake assessment')+'</button><a href="#doctors" class="btn btn-blue" style="font-size:12px;padding:8px 18px">'+(isEs?'Buscar clínica cerca':'Find a practice near me')+'</a></div>';
+  }catch(e){
+    rs.innerHTML='<div class="loading-box"><div style="font-size:13px;font-weight:600;color:var(--pure);margin-bottom:8px">'+(isEs?'Evaluación completa':'Assessment complete')+'</div><div class="loading-text" style="margin-bottom:20px">'+(isEs?'Recomendamos consultar con un profesional de medicina deportiva.':'We recommend consulting a sports medicine professional.')+'</div><a href="#doctors" class="btn btn-blue" style="font-size:12px;padding:8px 18px">'+(isEs?'Buscar clínica':'Find a practice')+'</a></div>';
+  }
+}
+
+function retake(){ ans=[]; cur=0; document.getElementById('result-shell').style.display='none'; document.getElementById('assess-shell').style.display='block'; renderQ(); }
+renderQ();
+
+// ── PRACTICE FINDER ──
+async function findPractices(){
+  var loc=document.getElementById('loc-input').value.trim();
+  var spec=document.getElementById('spec-input').value;
+  var isEs=currentLang==='es';
+  if(!loc){ alert(isEs?'Por favor ingresa tu ciudad o código postal.':'Please enter your city or zip code.'); return; }
+  var div=document.getElementById('doc-results');
+  div.innerHTML='<div class="doc-loading"><div class="spinner" style="margin:0 auto 12px"></div>'+(isEs?'Buscando clínicas de '+spec+' cerca de '+loc+'...':'Locating '+spec+' practices near '+loc+'...')+'</div>';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1400,messages:[{role:'user',content:'Generate 6 realistic sports medicine or orthopedic practices near '+loc+' specializing in '+spec+'. Use realistic practice names like regional medical centers. Respond ONLY with valid JSON array, no markdown. Each object: practice_name, specialty, address (realistic for '+loc+'), phone (US format (XXX) XXX-XXXX), rating (4.1-5.0), reviews (80-600), distance (e.g. 1.2 mi), accepts_new (boolean), bilingual_staff (boolean, 40% chance true), website_query (the most likely real website URL for this type of practice in this city, formatted as a full https:// URL if you are confident, otherwise a Google search URL like https://www.google.com/search?q=practice+name+city)'}]})});
+    var data=await res.json();
+    var practices=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+    div.className='doc-results';
+    div.innerHTML='';
+    practices.forEach(function(p){
+      var full=Math.floor(p.rating),stars='';
+      for(var i=0;i<full;i++)stars+='★';
+      if(p.rating%1>=0.5)stars+='½';
+      var card=document.createElement('div');
+      card.className='doc-card';
+      card.innerHTML=
+        '<div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>'+
+        '<div class="doc-name">'+p.practice_name+'</div>'+
+        '<div class="doc-type">'+p.specialty+'</div>'+
+        (p.bilingual_staff?'<div class="doc-bilingual">'+(isEs?'Personal bilingüe disponible':'Bilingual staff available')+'</div>':'')+
+        '<div class="doc-rating"><span class="doc-stars">'+stars+'</span><span class="doc-rating-text">'+p.rating+' · '+p.reviews+' '+(isEs?'reseñas':'reviews')+'</span></div>'+
+        '<div class="doc-details">'+
+          '<div class="doc-detail"><span class="doc-detail-label">'+(isEs?'Dir.':'Addr.')+'</span>'+p.address+'</div>'+
+          '<div class="doc-detail"><span class="doc-detail-label">Tel.</span>'+p.phone+' · '+p.distance+' '+(isEs?'de distancia':'away')+'</div>'+
+        '</div>'+
+        '<div class="doc-status '+(p.accepts_new?'ds-yes':'ds-call')+'">'+(p.accepts_new?(isEs?'Aceptando nuevos pacientes':'Accepting new patients'):(isEs?'Llamar para confirmar':'Call to confirm availability'))+'</div>'+
+        '<a href="https://www.google.com/search?q='+encodeURIComponent(p.practice_name+' '+loc+' official website')+'" target="_blank" rel="noopener" class="doc-visit">'+(isEs?'Visitar sitio web de la clínica':'Visit practice website')+'</a>'+
+        (p.direct_url?'<a href="'+p.direct_url+'" target="_blank" rel="noopener" class="doc-visit" style="margin-top:6px;border-color:var(--green);color:var(--green)">Direct website</a>':'');
+      div.appendChild(card);
+    });
+  }catch(e){
+    div.innerHTML='<div class="doc-empty">'+(isEs?'No se pudieron cargar los resultados. Recomendamos buscar en <a href="https://www.healthgrades.com" target="_blank">Healthgrades</a> o <a href="https://www.zocdoc.com" target="_blank">Zocdoc</a>.':'Unable to load results. We recommend searching on <a href="https://www.healthgrades.com" target="_blank">Healthgrades</a> or <a href="https://www.zocdoc.com" target="_blank">Zocdoc</a>.')+'</div>';
+  }
+}
+document.getElementById('loc-input').addEventListener('keydown',function(e){if(e.key==='Enter')findPractices();});
+
+// ── ONBOARDING ──
+var currentUsername = '';
+
+function loadProfile(){
+  try {
+    var stored = localStorage.getItem('atleta_user');
+    if(!stored){ console.log('No user stored'); return; }
+    var u = JSON.parse(stored);
+    if(!u){ console.log('Could not parse user'); return; }
+    console.log('Loading profile for:', u.username, u);
+
+    // Update all username displays
+    currentUsername = u.username || '';
+    document.querySelectorAll('.user-display').forEach(function(el){ el.textContent = u.username || ''; });
+
+    // Update avatar initials
+    var initial = (u.username || '?')[0].toUpperCase();
+    var avatars = ['profile-av-main','mob-profile-av'];
+    avatars.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.textContent = initial;
+    });
+
+    // Update profile section
+    var set = function(id, val){ var el=document.getElementById(id); if(el){ el.textContent = (val && String(val).trim()) ? String(val) : '—'; } else { console.log('Element not found:', id); } };
+    set('pf-name', u.name);
+    set('pf-age', u.age ? u.age + ' yrs' : '');
+    set('pf-gender', u.gender);
+    set('pf-sport', u.sport);
+    set('pf-injuries', u.injuries && u.injuries.trim() ? u.injuries : (currentLang==='es'?'Ninguna registrada':'None on record'));
+    set('pf-email', u.email && u.email.trim() ? u.email : (currentLang==='es'?'No proporcionado':'Not provided'));
+    set('pf-phone', u.phone && u.phone.trim() ? u.phone : (currentLang==='es'?'No proporcionado':'Not provided'));
+    if(u.joined){
+      var d = new Date(u.joined).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+      set('pf-joined', d);
+      var joinedEl = document.getElementById('profile-joined');
+      if(joinedEl) joinedEl.textContent = (currentLang==='es'?'Miembro desde ':'Member since ') + d;
+    }
+  } catch(e){ console.log('Profile load error:', e); }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  // Pre-populate profile as soon as DOM is ready
+  var stored = localStorage.getItem('atleta_user');
+  var version = localStorage.getItem('atleta_version');
+  if(stored && version === '1.0'){
+    try{ loadProfile(); }catch(e){}
+  }
+});
+
+window.addEventListener('load', function(){
+  var stored = localStorage.getItem('atleta_user');
+  var version = localStorage.getItem('atleta_version');
+  if(stored && version === '1.0'){
+    var onboard = document.getElementById('onboard');
+    var nameEl = document.getElementById('ob-welcome-back-name');
+    // Switch taglines for returning user
+    var newTag = document.getElementById('ob-tagline-new');
+    var retTag = document.getElementById('ob-tagline-returning');
+    if(newTag) newTag.style.display = 'none';
+    if(retTag) retTag.style.display = 'block';
+    try {
+      var u = JSON.parse(stored);
+      var firstName = (u.name||u.username||'Atleta').split(' ')[0];
+      if(nameEl) nameEl.textContent = firstName;
+    } catch(e){}
+
+    // Fade out after 1.8 seconds then show app
+    setTimeout(function(){
+      onboard.style.transition = 'opacity 0.6s ease';
+      onboard.style.opacity = '0';
+      setTimeout(function(){
+        onboard.style.display = 'none';
+        loadProfile();
+        window.scrollTo(0,0);
+      }, 600);
+    }, 1800);
+    return;
+  }
+  localStorage.removeItem('atleta_user');
+  localStorage.removeItem('atleta_version');
+
+  // Show splash 2.5s then profile setup
+  setTimeout(function(){
+    var splash = document.getElementById('ob-splash');
+    var profile = document.getElementById('ob-profile');
+    splash.style.transition = 'opacity 0.5s ease';
+    splash.style.opacity = '0';
+    setTimeout(function(){
+      splash.style.display = 'none';
+      profile.style.display = 'block';
+      profile.style.opacity = '0';
+      profile.style.transition = 'opacity 0.4s ease';
+      setTimeout(function(){ profile.style.opacity = '1'; document.getElementById('ob-username').focus(); }, 20);
+    }, 500);
+  }, 2500);
+});
+
+function obNext(step){
+  var isEs = currentLang === 'es';
+  if(step === 1){
+    var username = document.getElementById('ob-username').value.trim();
+    var err = document.getElementById('ob-err-1');
+    if(username.length < 3){ err.textContent = isEs?'Mínimo 3 caracteres.':'Minimum 3 characters.'; return; }
+    if(username.length > 20){ err.textContent = isEs?'Máximo 20 caracteres.':'Maximum 20 characters.'; return; }
+    if(username.indexOf(' ')!==-1){ err.textContent = isEs?'Sin espacios.':'No spaces allowed.'; return; }
+    err.textContent = '';
+    showStep(2);
+  } else if(step === 2){
+    var name = document.getElementById('ob-name').value.trim();
+    var age = document.getElementById('ob-age').value;
+    var gender = document.getElementById('ob-gender').value;
+    var err = document.getElementById('ob-err-2');
+    if(!name){ err.textContent = isEs?'Por favor ingresa tu nombre.':'Please enter your name.'; return; }
+    if(!age){ err.textContent = isEs?'Por favor ingresa tu edad.':'Please enter your age.'; return; }
+    if(!gender){ err.textContent = isEs?'Por favor selecciona tu género.':'Please select your gender.'; return; }
+    err.textContent = '';
+    showStep(3);
+  } else if(step === 3){
+    var sport = document.getElementById('ob-sport').value;
+    var err = document.getElementById('ob-err-3');
+    if(!sport){ err.textContent = isEs?'Por favor selecciona tu deporte.':'Please select your sport.'; return; }
+    err.textContent = '';
+    showStep(4);
+  }
+}
+
+function obBack(step){
+  showStep(step - 1);
+}
+
+function showStep(n){
+  for(var i=1;i<=4;i++){
+    var s = document.getElementById('ob-s'+i);
+    if(s) s.style.display = i===n?'block':'none';
+  }
+  var prog = document.getElementById('ob-progress');
+  if(prog) prog.style.width = (n/4*100)+'%';
+  var counter = document.getElementById('ob-step-counter');
+  if(counter) counter.textContent = (currentLang==='es'?'Paso ':'Step ')+n+' of 4';
+}
+
+function obFinish(){
+  var isEs = currentLang === 'es';
+  var btn = document.getElementById('ob-final-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px"></span>'+(isEs?'Guardando...':'Saving...');
+
+  var userData = {
+    username: document.getElementById('ob-username').value.trim(),
+    name: document.getElementById('ob-name').value.trim(),
+    age: document.getElementById('ob-age').value,
+    gender: document.getElementById('ob-gender').value,
+    sport: document.getElementById('ob-sport').value,
+    injuries: document.getElementById('ob-injuries').value.trim(),
+    email: document.getElementById('ob-email').value.trim(),
+    phone: document.getElementById('ob-phone').value.trim(),
+    lang: currentLang,
+    joined: new Date().toISOString()
+  };
+
+  setTimeout(function(){
+    localStorage.setItem('atleta_user', JSON.stringify(userData));
+    localStorage.setItem('atleta_version', '1.0');
+
+    // Update welcome name
+    var firstName = userData.name.split(' ')[0] || userData.username;
+    var wn = document.getElementById('ob-welcome-name');
+    var wnes = document.getElementById('ob-welcome-name-es');
+    if(wn) wn.textContent = 'Welcome, '+firstName+'.';
+    if(wnes) wnes.textContent = 'Bienvenido, '+firstName+'.';
+
+    // Show success
+    var profile = document.getElementById('ob-profile');
+    var success = document.getElementById('ob-success');
+    profile.style.transition = 'opacity 0.4s ease';
+    profile.style.opacity = '0';
+    setTimeout(function(){
+      profile.style.display = 'none';
+      success.style.display = 'flex';
+      success.style.opacity = '0';
+      success.style.transition = 'opacity 0.4s ease';
+      setTimeout(function(){ success.style.opacity = '1'; }, 20);
+      setTimeout(function(){
+        document.getElementById('ob-success-swirl').style.display = 'none';
+        var enterBtn = document.getElementById('ob-enter');
+        enterBtn.style.display = 'block';
+        enterBtn.style.opacity = '0';
+        enterBtn.style.transition = 'opacity 0.4s ease';
+        setTimeout(function(){ enterBtn.style.opacity = '1'; }, 20);
+      }, 2000);
+    }, 400);
+  }, 800);
+}
+
+function doEnter(){
+  loadProfile();
+  var onboard = document.getElementById('onboard');
+  onboard.style.transition = 'opacity 0.6s ease';
+  onboard.style.opacity = '0';
+  setTimeout(function(){
+    onboard.style.display = 'none';
+    document.body.style.overflow = '';
+    window.scrollTo(0,0);
+  }, 600);
+}
+
+function updateUserDisplay(username){
+  document.querySelectorAll('.user-display').forEach(function(el){ el.textContent = username; });
+  var initial = (username||'?')[0].toUpperCase();
+  ['profile-av-main','mob-profile-av'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = initial;
+  });
+}
+
+var resetTaps=0,resetTimer=null;
+function resetOnboarding(){
+  localStorage.removeItem('atleta_user');
+  localStorage.removeItem('atleta_version');
+  location.reload();
+}
+
+// ── LANGUAGE ──
+function setLang(lang){
+  document.body.className = lang === 'es' ? 'lang-es' : '';
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  currentLang = lang;
+  renderQ();
+}
+var currentLang = 'en';
+
+// ── SCROLL ANIMATIONS ──
+var obs = new IntersectionObserver(function(e){ e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('vis'); }); },{threshold:0.07});
+document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
+
+// ── INJURY LIBRARY ──
+function toggleInj(card){
+  var e=card.querySelector('.inj-expand'), t=card.querySelector('.inj-toggle');
+  var o=e.classList.toggle('open');
+  if(currentLang==='es') t.textContent=o?'Ocultar detalles':'Ver detalles / Prevención';
+  else t.textContent=o?'Collapse details':'View details / Prevention';
+}
+
+// ── RECOVERY DATE ──
+document.getElementById('rec-date').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+// ── PAIN SCALE ──
+var selectedPain = null;
+var painDiv = document.getElementById('pain-scale');
+for(var i=0;i<=10;i++){
+  (function(n){
+    var btn=document.createElement('button');
+    btn.className='pain-btn';
+    btn.textContent=n;
+    btn.onclick=function(){
+      document.querySelectorAll('.pain-btn').forEach(function(b){b.classList.remove('sel-pain');});
+      btn.classList.add('sel-pain');
+      selectedPain=n;
+    };
+    painDiv.appendChild(btn);
+  })(i);
+}
+
+// ── RECOVERY LOG ──
+var recoveryEntries = [];
+async function logRecovery(){
+  var injury = document.getElementById('rec-injury').value.trim();
+  var exercise = document.getElementById('rec-exercises').value;
+  var notes = document.getElementById('rec-notes').value.trim();
+  var isEs = currentLang === 'es';
+  if(!injury){ alert(isEs?'Por favor ingresa tu lesión o área en tratamiento.':'Please enter your injury or area being treated.'); return; }
+  if(selectedPain === null){ alert(isEs?'Por favor selecciona tu nivel de dolor.':'Please select your pain level.'); return; }
+
+  var entry = { date: new Date().toLocaleDateString(), injury, pain: selectedPain, exercise, notes, feedback: null };
+  recoveryEntries.unshift(entry);
+  renderLog(true);
+
+  try {
+    var notesText = notes ? notes : (currentLang==='es' ? 'Sin notas adicionales.' : 'No additional notes provided.');
+    var prompt = currentLang === 'es'
+      ? 'Eres un asistente clínico de recuperación deportiva en Atleta. Un atleta registró lo siguiente hoy:\n\nLesión: '+injury+'\nNivel de dolor: '+selectedPain+'/10\nEjercicio completado: '+exercise+'\nNotas del atleta: '+notesText+'\n\nResponde directamente a lo que el atleta escribió en sus notas. Si mencionan dolor, dificultad o preocupación específica, abórdala. Si el nivel de dolor es alto (7+), recomienda contactar a su médico. Proporciona 2-3 oraciones de retroalimentación clínica personalizada en español que respondan específicamente a sus notas.'
+      : 'You are a clinical sports recovery assistant on Atleta. An athlete logged the following today:\n\nInjury: '+injury+'\nPain level: '+selectedPain+'/10\nExercise completed: '+exercise+'\nAthlete notes: '+notesText+'\n\nRespond directly and specifically to what the athlete wrote in their notes. If they mention specific pain, difficulty, or concern, address it directly. If pain level is high (7+), recommend contacting their doctor. Provide 2-3 sentences of personalized clinical feedback that directly responds to their notes and situation.';
+    var res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:prompt}]})});
+    var data = await res.json();
+    entry.feedback = data.content[0].text;
+    renderLog(false);
+  } catch(e) {
+    entry.feedback = isEs ? 'Excelente trabajo registrando tu recuperación hoy. La consistencia es clave para una recuperación exitosa.' : 'Great job logging your recovery today. Consistency is key to a successful recovery.';
+    renderLog(false);
+  }
+
+  document.getElementById('rec-injury').value='';
+  document.getElementById('rec-notes').value='';
+  document.getElementById('rec-exercises').selectedIndex=0;
+  document.querySelectorAll('.pain-btn').forEach(function(b){b.classList.remove('sel-pain');});
+  selectedPain=null;
+}
+
+function renderLog(loading){
+  var log = document.getElementById('rec-log');
+  log.innerHTML = '';
+  recoveryEntries.forEach(function(e,i){
+    var painClass = e.pain<=3?'rep-low':e.pain<=6?'rep-med':'rep-high';
+    var div=document.createElement('div');
+    div.className='rec-entry';
+    div.innerHTML='<div class="rec-entry-head"><div class="rec-entry-date">'+e.date+' — '+e.injury+'</div><div class="rec-entry-pain '+painClass+'">Pain: '+e.pain+'/10</div></div>';
+    if(e.exercise) div.innerHTML+='<div class="rec-entry-note" style="margin-bottom:4px">'+e.exercise+'</div>';
+    if(e.notes) div.innerHTML+='<div class="rec-entry-note">'+e.notes+'</div>';
+    if(i===0){
+      if(loading||!e.feedback){
+        div.innerHTML+='<div class="rec-ai-feedback"><div class="spinner" style="width:18px;height:18px;margin:0 0 6px"></div><span style="font-size:12px">Generating feedback...</span></div>';
+      } else {
+        div.innerHTML+='<div class="rec-ai-feedback">'+e.feedback+'</div>';
+      }
+    }
+    log.appendChild(div);
+  });
+}
+
+// ── ASSESSMENT ──
+var qs = {
+  en:[
+    {s:'Section 1 — Sport profile',q:'What sport do you primarily play?',o:['Soccer','Basketball','Football','Baseball or Softball','Tennis or Volleyball','Track or Cross country','Swimming','Gymnastics or Dance','Another sport']},
+    {s:'Section 2 — Training load',q:'How many hours per week do you train?',o:['Fewer than 5 hours','5 to 10 hours','10 to 15 hours','More than 15 hours']},
+    {s:'Section 3 — Injury history',q:'Have you had a sports injury in the past two years?',o:['No previous injuries','Minor injury — back in under four weeks','Moderate injury — out one to three months','Serious injury — out three or more months, or had surgery']},
+    {s:'Section 4 — Current symptoms',q:'Do you currently have any pain during athletic activity?',o:['No pain at all','Mild discomfort that goes away after warmup','Pain during activity that I push through','Pain that changes how I move','I have stopped playing due to pain']},
+    {s:'Section 5 — Recovery habits',q:'How would you describe your warmup and recovery routine?',o:['I always warm up and cool down properly','I sometimes skip warmup or cooldown','I rarely warm up or cool down','I do not have a routine']},
+    {s:'Section 6 — Conditioning',q:'How would you rate your overall physical conditioning?',o:['Excellent — I strength train regularly','Good — I stay active but do not cross-train','Fair — I mostly just practice my sport','Returning after a period of inactivity']}
+  ],
+  es:[
+    {s:'Sección 1 — Perfil deportivo',q:'¿Qué deporte practicas principalmente?',o:['Fútbol','Baloncesto','Fútbol americano','Béisbol o Sóftbol','Tenis o Voleibol','Atletismo o Campo traviesa','Natación','Gimnasia o Danza','Otro deporte']},
+    {s:'Sección 2 — Carga de entrenamiento',q:'¿Cuántas horas por semana entrenas?',o:['Menos de 5 horas','5 a 10 horas','10 a 15 horas','Más de 15 horas']},
+    {s:'Sección 3 — Historial de lesiones',q:'¿Has tenido una lesión deportiva en los últimos dos años?',o:['Sin lesiones previas','Lesión leve — regresé en menos de cuatro semanas','Lesión moderada — fuera uno a tres meses','Lesión grave — fuera tres o más meses, o cirugía']},
+    {s:'Sección 4 — Síntomas actuales',q:'¿Tienes actualmente algún dolor durante la actividad deportiva?',o:['Sin dolor','Leve molestia que desaparece al calentar','Dolor durante la actividad que ignoro','Dolor que cambia cómo me muevo','He dejado de jugar por el dolor']},
+    {s:'Sección 5 — Hábitos de recuperación',q:'¿Cómo describirías tu rutina de calentamiento y recuperación?',o:['Siempre caliento y enfrío correctamente','A veces omito el calentamiento o enfriamiento','Rara vez caliento o enfrío','No tengo una rutina']},
+    {s:'Sección 6 — Acondicionamiento',q:'¿Cómo calificarías tu condición física general?',o:['Excelente — entreno fuerza regularmente','Buena — me mantengo activo pero no hago entrenamiento cruzado','Regular — principalmente practico mi deporte','Regresando después de un período de inactividad']}
+  ]
+};
+var ans=[],cur=0;
+
+function renderQ(){
+  var lang = currentLang;
+  var q = qs[lang][cur];
+  document.getElementById('q-section').textContent = q.s;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('a-counter').textContent = (cur+1)+' / 6';
+  document.getElementById('a-bar').style.width = (cur/6*100)+'%';
+  document.getElementById('a-back').style.visibility = cur>0?'visible':'hidden';
+  var nx=document.getElementById('a-next');
+  nx.disabled=ans[cur]===undefined;
+  nx.innerHTML=cur===5?('<span class="en-inline">Generate report</span><span class="es-inline">Generar informe</span>'):('<span class="en-inline">Continue</span><span class="es-inline">Continuar</span>');
+  var opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  q.o.forEach(function(opt,i){
+    var btn=document.createElement('button');
+    btn.className='q-opt'+(ans[cur]===i?' sel':'');
+    btn.innerHTML='<div class="q-radio"><div class="q-dot"></div></div>'+opt;
+    btn.onclick=function(){
+      document.querySelectorAll('.q-opt').forEach(function(b){b.classList.remove('sel');});
+      btn.classList.add('sel'); ans[cur]=i;
+      document.getElementById('a-next').disabled=false;
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function nextQ(){ if(ans[cur]===undefined)return; if(cur<5){cur++;renderQ();}else{runAssessment();} }
+function prevQ(){ if(cur>0){cur--;renderQ();} }
+
+async function runAssessment(){
+  document.getElementById('a-bar').style.width='100%';
+  document.getElementById('assess-shell').style.display='none';
+  var rs=document.getElementById('result-shell');
+  rs.style.display='block';
+  var isEs=currentLang==='es';
+  rs.innerHTML='<div class="loading-box"><div class="spinner"></div><div class="loading-text">'+(isEs?'Analizando tus respuestas...':'Analyzing your responses...')+'</div></div>';
+  var summary=qs[currentLang].map(function(q,i){return q.q+' — '+(q.o[ans[i]]||'—');}).join('\n');
+  var prompt = isEs
+    ? 'Eres una IA clínica de medicina deportiva en Atleta. Un atleta joven completó esta evaluación en español:\n\n'+summary+'\n\nResponde SOLO con JSON válido sin markdown. Claves: risk_level (Bajo/Moderado/Alto), risk_summary (una oración clínica en español, máx 25 palabras), top_risks (array de 3 riesgos específicos en español), prevention_tips (array de 4 recomendaciones en español), see_doctor (boolean), doctor_reason (una oración si true, vacío si false, en español), message (2-3 oraciones de orientación profesional alentadora en español)'
+    : 'You are a clinical sports medicine AI on Atleta. A youth athlete completed this assessment:\n\n'+summary+'\n\nRespond ONLY with valid JSON, no markdown. Keys: risk_level (Low/Moderate/High), risk_summary (one clinical sentence under 25 words), top_risks (array of 3 specific risks), prevention_tips (array of 4 recommendations), see_doctor (boolean), doctor_reason (one sentence if true, empty if false), message (2-3 sentences of professional encouraging guidance)';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    var data=await res.json();
+    var result=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+    var rcc=result.risk_level==='Low'||result.risk_level==='Bajo'?'rc-low':result.risk_level==='Moderate'||result.risk_level==='Moderado'?'rc-med':'rc-high';
+    rs.innerHTML=
+      '<div class="result-top"><div class="result-title-text">'+(isEs?'Informe de Riesgo de Lesión':'Injury Risk Assessment Report')+'</div><div class="risk-chip '+rcc+'">'+result.risk_level+' '+(isEs?'Riesgo':'Risk')+'</div></div>'+
+      '<div class="result-body">'+
+        '<div><div class="rb-label">'+(isEs?'Resumen clínico':'Clinical summary')+'</div><div style="font-size:14px;color:var(--light);font-weight:300;line-height:1.65">'+result.risk_summary+'</div></div>'+
+        '<div><div class="rb-label">'+(isEs?'Principales riesgos identificados':'Primary risks identified')+'</div><div class="rb-items">'+result.top_risks.map(function(r){return'<div class="rb-item"><div class="rb-dot"></div>'+r+'</div>';}).join('')+'</div></div>'+
+        '<div><div class="rb-label">'+(isEs?'Plan de prevención recomendado':'Recommended prevention plan')+'</div><div class="rb-items">'+result.prevention_tips.map(function(t){return'<div class="rb-item"><div class="rb-dot" style="background:var(--green)"></div>'+t+'</div>';}).join('')+'</div></div>'+
+        '<div class="result-msg">'+result.message+'</div>'+
+        (result.see_doctor?'<div class="result-alert"><div class="result-alert-label">'+(isEs?'Recomendación clínica':'Clinical recommendation')+'</div><div class="result-alert-text">'+result.doctor_reason+'</div></div>':'')+
+      '</div>'+
+      '<div class="result-foot"><button onclick="retake()" class="btn btn-outline" style="font-size:12px;padding:8px 18px">'+(isEs?'Repetir evaluación':'Retake assessment')+'</button><a href="#doctors" class="btn btn-blue" style="font-size:12px;padding:8px 18px">'+(isEs?'Buscar clínica cerca':'Find a practice near me')+'</a></div>';
+  }catch(e){
+    rs.innerHTML='<div class="loading-box"><div style="font-size:13px;font-weight:600;color:var(--pure);margin-bottom:8px">'+(isEs?'Evaluación completa':'Assessment complete')+'</div><div class="loading-text" style="margin-bottom:20px">'+(isEs?'Recomendamos consultar con un profesional de medicina deportiva.':'We recommend consulting a sports medicine professional.')+'</div><a href="#doctors" class="btn btn-blue" style="font-size:12px;padding:8px 18px">'+(isEs?'Buscar clínica':'Find a practice')+'</a></div>';
+  }
+}
+
+function retake(){ ans=[]; cur=0; document.getElementById('result-shell').style.display='none'; document.getElementById('assess-shell').style.display='block'; renderQ(); }
+renderQ();
+
+// ── PRACTICE FINDER ──
+async function findPractices(){
+  var loc=document.getElementById('loc-input').value.trim();
+  var spec=document.getElementById('spec-input').value;
+  var isEs=currentLang==='es';
+  if(!loc){ alert(isEs?'Por favor ingresa tu ciudad o código postal.':'Please enter your city or zip code.'); return; }
+  var div=document.getElementById('doc-results');
+  div.innerHTML='<div class="doc-loading"><div class="spinner" style="margin:0 auto 12px"></div>'+(isEs?'Buscando clínicas de '+spec+' cerca de '+loc+'...':'Locating '+spec+' practices near '+loc+'...')+'</div>';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1400,messages:[{role:'user',content:'Generate 6 realistic sports medicine or orthopedic practices near '+loc+' specializing in '+spec+'. Use realistic practice names like regional medical centers. Respond ONLY with valid JSON array, no markdown. Each object: practice_name, specialty, address (realistic for '+loc+'), phone (US format (XXX) XXX-XXXX), rating (4.1-5.0), reviews (80-600), distance (e.g. 1.2 mi), accepts_new (boolean), bilingual_staff (boolean, 40% chance true), website_query (the most likely real website URL for this type of practice in this city, formatted as a full https:// URL if you are confident, otherwise a Google search URL like https://www.google.com/search?q=practice+name+city)'}]})});
+    var data=await res.json();
+    var practices=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+    div.className='doc-results';
+    div.innerHTML='';
+    practices.forEach(function(p){
+      var full=Math.floor(p.rating),stars='';
+      for(var i=0;i<full;i++)stars+='★';
+      if(p.rating%1>=0.5)stars+='½';
+      var card=document.createElement('div');
+      card.className='doc-card';
+      card.innerHTML=
+        '<div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>'+
+        '<div class="doc-name">'+p.practice_name+'</div>'+
+        '<div class="doc-type">'+p.specialty+'</div>'+
+        (p.bilingual_staff?'<div class="doc-bilingual">'+(isEs?'Personal bilingüe disponible':'Bilingual staff available')+'</div>':'')+
+        '<div class="doc-rating"><span class="doc-stars">'+stars+'</span><span class="doc-rating-text">'+p.rating+' · '+p.reviews+' '+(isEs?'reseñas':'reviews')+'</span></div>'+
+        '<div class="doc-details">'+
+          '<div class="doc-detail"><span class="doc-detail-label">'+(isEs?'Dir.':'Addr.')+'</span>'+p.address+'</div>'+
+          '<div class="doc-detail"><span class="doc-detail-label">Tel.</span>'+p.phone+' · '+p.distance+' '+(isEs?'de distancia':'away')+'</div>'+
+        '</div>'+
+        '<div class="doc-status '+(p.accepts_new?'ds-yes':'ds-call')+'">'+(p.accepts_new?(isEs?'Aceptando nuevos pacientes':'Accepting new patients'):(isEs?'Llamar para confirmar':'Call to confirm availability'))+'</div>'+
+        '<a href="https://www.google.com/search?q='+encodeURIComponent(p.practice_name+' '+loc+' official website')+'" target="_blank" rel="noopener" class="doc-visit">'+(isEs?'Visitar sitio web de la clínica':'Visit practice website')+'</a>'+
+        (p.direct_url?'<a href="'+p.direct_url+'" target="_blank" rel="noopener" class="doc-visit" style="margin-top:6px;border-color:var(--green);color:var(--green)">Direct website</a>':'');
+      div.appendChild(card);
+    });
+  }catch(e){
+    div.innerHTML='<div class="doc-empty">'+(isEs?'No se pudieron cargar los resultados. Recomendamos buscar en <a href="https://www.healthgrades.com" target="_blank">Healthgrades</a> o <a href="https://www.zocdoc.com" target="_blank">Zocdoc</a>.':'Unable to load results. We recommend searching on <a href="https://www.healthgrades.com" target="_blank">Healthgrades</a> or <a href="https://www.zocdoc.com" target="_blank">Zocdoc</a>.')+'</div>';
+  }
+}
+document.getElementById('loc-input').addEventListener('keydown',function(e){if(e.key==='Enter')findPractices();});
+
+// ── ONBOARDING ──
+var currentUsername = '';
+
+window.addEventListener('load', function(){
+  var stored = localStorage.getItem('atleta_user');
+  var version = localStorage.getItem('atleta_version');
+  if(stored && version === '1.0'){
+    // Already signed in — skip onboarding instantly
+    var onboard = document.getElementById('onboard');
+    onboard.style.display = 'none';
+    try {
+      var u = JSON.parse(stored);
+      if(u.username) updateUserDisplay(u.username);
+    } catch(e){}
+    return;
+  }
+  // Clear stale data
+  localStorage.removeItem('atleta_user');
+  localStorage.removeItem('atleta_version');
+
+  // Show splash for 2.5s then transition to signup
+  setTimeout(function(){
+    var splash = document.getElementById('ob-splash');
+    var signup = document.getElementById('ob-signup');
+    splash.style.transition = 'opacity 0.5s ease';
+    splash.style.opacity = '0';
+    setTimeout(function(){
+      splash.style.display = 'none';
+      signup.style.display = 'block';
+      signup.style.opacity = '0';
+      signup.style.transition = 'opacity 0.5s ease';
+      setTimeout(function(){ signup.style.opacity = '1'; }, 20);
+      setTimeout(function(){ document.getElementById('ob-username').focus(); }, 100);
+    }, 500);
+  }, 2500);
+});
+
+function doSignup(){
+  var username = document.getElementById('ob-username').value.trim();
+  var isEs = currentLang === 'es';
+  var errEl = document.getElementById('ob-error');
+
+  if(username.length < 3){
+    errEl.textContent = isEs ? 'Mínimo 3 caracteres.' : 'Minimum 3 characters.';
+    return;
+  }
+  if(username.length > 20){
+    errEl.textContent = isEs ? 'Máximo 20 caracteres.' : 'Maximum 20 characters.';
+    return;
+  }
+  if(username.indexOf(' ') !== -1){
+    errEl.textContent = isEs ? 'Sin espacios.' : 'No spaces allowed.';
+    return;
+  }
+  errEl.textContent = '';
+
+  var btn = document.getElementById('ob-btn');
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  btn.innerHTML = '<span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:8px"></span>' + (isEs ? 'Creando...' : 'Creating...');
+
+  setTimeout(function(){
+    // Save to localStorage
+    localStorage.setItem('atleta_user', JSON.stringify({
+      username: username,
+      lang: currentLang,
+      joined: new Date().toISOString(),
+      name: '', email: '', phone: '', sport: '', age: ''
+    }));
+    localStorage.setItem('atleta_version', '1.0');
+    currentUsername = username;
+    updateUserDisplay(username);
+
+    // Transition to success
+    var signup = document.getElementById('ob-signup');
+    var success = document.getElementById('ob-success');
+    signup.style.transition = 'opacity 0.4s ease';
+    signup.style.opacity = '0';
+    setTimeout(function(){
+      signup.style.display = 'none';
+      success.style.display = 'flex';
+      success.style.opacity = '0';
+      success.style.transition = 'opacity 0.4s ease';
+      setTimeout(function(){ success.style.opacity = '1'; }, 20);
+
+      // After 2s show enter button
+      setTimeout(function(){
+        document.getElementById('ob-loading').style.display = 'none';
+        var enterBtn = document.getElementById('ob-enter');
+        enterBtn.style.display = 'block';
+        enterBtn.style.opacity = '0';
+        enterBtn.style.transition = 'opacity 0.4s ease';
+        setTimeout(function(){ enterBtn.style.opacity = '1'; }, 20);
+      }, 2000);
+    }, 400);
+  }, 800);
+}
+
+function doEnter(){
+  var onboard = document.getElementById('onboard');
+  onboard.style.transition = 'opacity 0.6s ease';
+  onboard.style.opacity = '0';
+  setTimeout(function(){
+    onboard.style.display = 'none';
+    document.body.style.overflow = '';
+    window.scrollTo(0, 0);
+  }, 600);
+}
+
+function updateUserDisplay(username){
+  var displays = document.querySelectorAll('.user-display');
+  displays.forEach(function(el){ el.textContent = username; });
+}
+
+// Reset onboarding — tap logo 7 times
+var resetTaps = 0, resetTimer = null;
+function resetOnboarding(){
+  resetTaps++;
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(function(){ resetTaps = 0; }, 2000);
+  if(resetTaps >= 7){
+    resetTaps = 0;
+    localStorage.removeItem('atleta_user');
+    localStorage.removeItem('atleta_version');
+    location.reload();
+  }
+}
+
+</script>
+</body>
+</html>
